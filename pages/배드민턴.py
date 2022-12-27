@@ -23,7 +23,9 @@ st_lottie(
     width=200
     )
 
-st.success('[지도](%s)' % 'https://map.naver.com/v5/directions/-/14114858.818669442,4540450.617396284,%EC%97%90%EC%9D%B4%EC%9B%90%EB%AF%BC%ED%84%B4%20%EC%9D%BC%EC%82%B0%EC%A0%90,1328259034,PLACE_POI/-/transit?c=14114507.1137752,4540282.9324362,15,0,0,0,dh&isCorrectAnswer=true')
+st.success('[네이버지도](%s)' % 'https://map.naver.com/v5/directions/-/14114397.866921965,4540303.012815246,%EA%B3%A0%EC%96%91%ED%8C%A9%ED%86%A0%EC%8A%A4%ED%83%80%EB%94%94%EC%9B%80,1966063934,PLACE_POI/-/transit?c=14111433.1227196,4538425.9290852,12.89,0,0,0,dh')
+
+st.warning('[카카오맵](%s)' % 'https://map.kakao.com/link/to/고양팩토스타디움,37.722334,126.791838')
 
 st.write("배드민턴")
 if st.button('홈으로'):

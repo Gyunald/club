@@ -5,19 +5,6 @@ import requests
 from streamlit_lottie import st_lottie
 from streamlit_extras.switch_page_button import switch_page
 
-
-st.set_page_config(
-    page_title="Ex-stream-ly Cool App",
-    page_icon="😎",
-    layout="wide",
-    initial_sidebar_state="expanded",
-    menu_items={
-        'Get Help': 'https://www.extremelycoolapp.com/help',
-        'Report a bug': "https://www.extremelycoolapp.com/bug",
-        'About': "# This is a header. This is an *extremely* cool app!"
-    }
-)
-
 st.header('IMI Critical Engineering Club')
 
 c1, c2, c3 = st.columns([1,1,1])

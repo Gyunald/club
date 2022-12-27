@@ -6,14 +6,14 @@ from streamlit_lottie import st_lottie
 from streamlit_extras.switch_page_button import switch_page
 
 st.header('IMI Critical Engineering Club')
-with st.expander('',expanded=True):
+with st.expander('dynamic',expanded=True):
     c1, c2, c3 = st.columns([1,1,1])
 
     with c1:
         st.image('https://cdn.pixabay.com/photo/2021/03/02/19/26/snowshoes-6063630_960_720.jpg',use_column_width=True)
         if st.button('배드민턴'):
             switch_page('배드민턴')
-
+        
     with c2:
         st.image('https://cdn.pixabay.com/photo/2019/01/21/13/58/table-tenis-3946115_960_720.jpg',use_column_width=True)
         if st.button('탁구'):
@@ -24,7 +24,7 @@ with st.expander('',expanded=True):
         if st.button('풋살'):
             switch_page('풋살')
 
-
+with st.expander('static',expanded=True):
     c4, c5, c6 = st.columns([1,1,1])
 
     with c4:

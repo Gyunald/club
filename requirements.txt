@@ -2,5 +2,9 @@ BeautifulSoup4
 lxml
 matplotlib
 requests
+streamlit
 streamlit_lottie
 streamlit_extras
+streamlit_authenticator
+streamlit_extras.switch_page_button
+firebase_admin

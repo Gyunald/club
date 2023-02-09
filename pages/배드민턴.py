@@ -5,25 +5,25 @@ import requests
 from streamlit_extras.switch_page_button import switch_page
 from firebase_admin import firestore
 
-@st.experimental_memo
-def load_lottie(url:str):
-    r = requests.get(url)
+# @st.experimental_memo
+# def load_lottie(url:str):
+#     r = requests.get(url)
 
-    if r.status_code != 200:
-        return None
-    return r.json()
+#     if r.status_code != 200:
+#         return None
+#     return r.json()
 
-lottie_url = 'https://assets6.lottiefiles.com/packages/lf20_5edeys7f.json'
-lottie_json = load_lottie(lottie_url)
+# lottie_url = 'https://assets6.lottiefiles.com/packages/lf20_5edeys7f.json'
+# lottie_json = load_lottie(lottie_url)
 
-st_lottie(
-    lottie_json,
-    speed=1,
-    # reverse='Ture',
-    loop=True,
-    quality='low',
-    width=200
-    )
+# st_lottie(
+#     lottie_json,
+#     speed=1,
+#     # reverse='Ture',
+#     loop=True,
+#     quality='low',
+#     width=200
+#     )
 
 empty = st.empty()
 if 'nickname' not in st.session_state:

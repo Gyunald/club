@@ -10,9 +10,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 
 st.set_page_config(
-    page_title="IMI CLUB",
-    page_icon="⚽️",
-)
+    page_title="🏒 IMI CLUB")
 
 if not firebase_admin._apps:
     cred = credentials.Certificate({

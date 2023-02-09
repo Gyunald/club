@@ -84,7 +84,7 @@ if n :
     c = st.columns(3)
     doc_ref = db.collection('activity').document('배드민턴')
     doc = doc_ref.get().to_dict()
-    doc_time = (datetime.datetime.utcnow()+timedelta(hours=9).strftime('%Y-%m-%d-%H:%M')
+    doc_time = (datetime.datetime.utcnow()+datetime.timedelta(hours=9)).strftime('%Y-%m-%d-%H:%M')
 
     for i,j in zip(range(len(c)), sorted(doc.keys(),reverse=True)):
         doc_document = doc[j]

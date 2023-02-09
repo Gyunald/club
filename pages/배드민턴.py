@@ -89,7 +89,7 @@ if n :
     for i,j in zip(range(len(c)), sorted(doc.keys(),reverse=True)):
         doc_document = doc[j]
         doc_list = doc_document['참가자']
-        standard = datetime.datetime.utcnow().strftime('%Y-%m-%d') > doc_document['날짜']
+        standard = (datetime.datetime.utcnow()+datetime.timedelta(hours=9)).strftime('%Y-%m-%d') > doc_document['날짜']
         k = f"disabled_{j}"
         if k not in st.session_state:
             st.session_state[k] = False

@@ -103,7 +103,8 @@ for i,j in zip(range(len(c)), sorted(doc.keys(),reverse=True)):
                     if n not in doc_list:
                         doc_list.append(n)
                         doc_application[n] = doc_time
-                        doc_ref.update(doc)
+                    doc_ref.update(doc)
+                    st.balloons()
 
             if 불참:
                 doc_cancel = doc_document['불참']
@@ -111,6 +112,7 @@ for i,j in zip(range(len(c)), sorted(doc.keys(),reverse=True)):
                 if n in doc_list :
                     doc_list.remove(n)
                 doc_ref.update(doc)
+                st.snow()
 
             if len(doc_list) == 2:
                 st.error(f"{len(doc_list)}/2 명")

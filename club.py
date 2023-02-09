@@ -10,15 +10,8 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 
 st.set_page_config(
-    page_title="Ex-stream-ly Cool App",
-    page_icon="😎",
-    layout="wide",
-    initial_sidebar_state="expanded",
-    menu_items={
-        'Get Help': 'https://www.extremelycoolapp.com/help',
-        'Report a bug': "https://www.extremelycoolapp.com/bug",
-        'About': "# This is a header. This is an *extremely* cool app!"
-    }
+    page_title="IMI CLUB",
+    page_icon="⚽️",
 )
 
 if not firebase_admin._apps:

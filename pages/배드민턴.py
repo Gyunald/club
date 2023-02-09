@@ -64,64 +64,66 @@ def disabled_불참():
     st.session_state.disabled_참 = False
     st.session_state.disabled_불참 = True
 
-crew = db.collection('activity').document('배드민턴').get().to_dict()['2023-02-08']['참가자']
+c = st.columns(3)
+doc_ref = db.collection('activity').document('배드민턴')
+doc = doc_ref.get().to_dict()
+doc_time = datetime.datetime.now().strftime('%Y-%m-%d-%H:%M')
 
-if "disabled_참" not in st.session_state:
-    st.session_state.disabled_참 = False
-    st.session_state.disabled_불참 = False
+for i,j in zip(range(len(c)), sorted(doc.keys(),reverse=True)):
+    doc_document = doc[j]
+    doc_list = doc_document['참가자']
+    standard = datetime.datetime.utcnow().strftime('%Y-%m-%d') > doc_document['날짜']
+    k = f"disabled_{j}"
+    if k not in st.session_state:
+        st.session_state[k] = False
+        st.session_state[k] = False
 
-    if len(crew) == 2:
-        st.session_state.disabled_참 = True
-        st.session_state.disabled_불참 = True
-        if n in crew:
-            st.session_state.disabled_불참 = False
+    if len(doc_list) == 2:
+        st.session_state[k] = True
+        st.session_state[k] = True
+        if n in doc_list:
+            st.session_state[k] = False
 
-for i in range(1,2):
-    c1,c2,c3= st.columns([i,i,i])
+    if standard:
+        st.session_state[k] = True
+        st.session_state[k] = True
+        if n in doc_list:
+            st.session_state[k] = False
 
-with c1:
-    doc_time = datetime.datetime.now().strftime('%Y-%m-%d-%H:%M')
-    
-    with st.form('output_form',):
-        st.header(f'{date}-{time}')
-        st.header(f'{place}')
-        참 = st.form_submit_button('참여',on_click=disabled_참, disabled=st.session_state.disabled_참)
-        불참 = st.form_submit_button('불참', on_click=disabled_불참, disabled=st.session_state.disabled_불참)
-        doc_ref = db.collection('activity').document('배드민턴')
-        doc = doc_ref.get().to_dict()
-        doc_document = doc['2023-02-08']
-        doc_list = doc_document['참가자']        
+    with c[i]:
+        with st.form(j):
+            st.header(f"{doc_document['날짜']}")
+            st.header(f"{doc_document['시간']}")
+            st.header(f"{doc_document['장소']}")
+            참 = st.form_submit_button('참여',on_click=disabled_참, disabled=st.session_state[k])
+            불참 = st.form_submit_button('불참', on_click=disabled_불참, disabled=st.session_state[k])
+            if 참 :
+                if len(doc_list) < 2:
+                    doc_application = doc_document['참여']
+                    if n not in doc_list:
+                        doc_list.append(n)
+                        doc_application[n] = doc_time
+                        doc_ref.update(doc)
 
-        if 참 :
-            if len(doc_list) < 2:
-                doc_application = doc_document['참여']
-                doc_list.append(n)
-                doc_application[n] = doc_time
+            if 불참:
+                doc_cancel = doc_document['불참']
+                doc_cancel[n] = doc_time
+                if n in doc_list :
+                    doc_list.remove(n)
                 doc_ref.update(doc)
 
-        if 불참:
-            doc_cancel = doc_document['불참']
-            doc_cancel[n] = doc_time
-            if n in doc_list :
-                doc_list.remove(n)
-            doc_ref.update(doc)
-
-        if len(doc_list) == 2:
-            st.error(f"{len(doc_list)}/2 명")
-            if n in doc_list:
-                st.session_state.disabled_불참 = False
+            if len(doc_list) == 2:
+                st.error(f"{len(doc_list)}/2 명")
+                if n in doc_list:
+                    st.session_state.disabled_불참 = False
+                else:
+                    st.session_state.disabled_참 = True
+                    st.session_state.disabled_불참 = True
             else:
-                st.session_state.disabled_참 = True
-                st.session_state.disabled_불참 = True
-        else:
-            st.info(f"{len(doc_list)}/2 명")
-        st.error(doc_list)
-        st.success('[네이버지도](%s)' % f'https://map.naver.com/v5/directions/-/14114397.866921965,4540303.012815246,%EA%B3%A0%EC%96%91%ED%8C%A9%ED%86%A0%EC%8A%A4%ED%83%80%EB%94%94%EC%9B%80,1966063934,PLACE_POI/-/transit?c=14111433.1227196,4538425.9290852,12.89,0,0,0,dh')
-        st.warning('[카카오맵](%s)' % 'https://map.kakao.com/link/to/고양팩토스타디움,37.722334,126.791838')
-
-# a =db.collection('activity').document('배드민턴').get().to_dict()['2023-02-08']['참가자']
-# for i in a:
-#     st.write(i)
+                st.info(f"{len(doc_list)}/2 명")
+            st.error(doc_list)
+            st.success('[네이버지도](%s)' % f'https://map.naver.com/v5/directions/-/14114397.866921965,4540303.012815246,%EA%B3%A0%EC%96%91%ED%8C%A9%ED%86%A0%EC%8A%A4%ED%83%80%EB%94%94%EC%9B%80,1966063934,PLACE_POI/-/transit?c=14111433.1227196,4538425.9290852,12.89,0,0,0,dh')
+            st.warning('[카카오맵](%s)' % 'https://map.kakao.com/link/to/고양팩토스타디움,37.722334,126.791838')
 
 if st.button('홈으로'):
     switch_page('club')

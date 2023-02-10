@@ -1,51 +1,3 @@
-import pandas as pd
-import streamlit as st
-import datetime
-import requests
-from streamlit_lottie import st_lottie
-from streamlit_extras.switch_page_button import switch_page
-import streamlit_authenticator as stauth
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import firestore
-
-st.set_page_config(
-    page_title="🏒 IMI CLUB")
-
-if not firebase_admin._apps:
-    cred = credentials.Certificate({
-    "type": st.secrets.type,
-    "project_id": st.secrets.project_id,
-    "private_key_id": st.secrets.private_key_id,
-    "private_key": st.secrets.private_key,
-    "client_email": st.secrets.client_email,
-    "client_id": st.secrets.client_id,
-    "auth_uri": st.secrets.auth_uri,
-    "token_uri": st.secrets.token_uri,
-    "auth_provider_x509_cert_url": st.secrets.auth_provider_x509_cert_url,
-    "client_x509_cert_url": st.secrets.client_x509_cert_url
-    })
-    app = firebase_admin.initialize_app(cred)
-
-st.session_state.clear()
-
-empty = st.empty()
-nickname = st.text_input('닉네임 입력(추후 회원기능 도입)')
-
-if 'nickname' not in st.session_state:
-    st.session_state.nickname = nickname
-st.write(st.session_state.nickname)
-db = firestore.client()
-
-
-def img(img):
-     return st.image(img,use_column_width=True)
-
-def expander(title):
-    return st.expander(title, expanded=False)
-
-
-# data = {
 #     u'stringExample': u'Hello, World!',
 #     u'booleanExample': True,
 #     u'numberExample': 3.14159265,
@@ -77,36 +29,86 @@ def expander(title):
 # # D
 # res = collection.document('A01').delete() 
 
+import pandas as pd
+import streamlit as st
+import datetime
+import requests
+from streamlit_lottie import st_lottie
+from streamlit_extras.switch_page_button import switch_page
+import streamlit_authenticator as stauth
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
+
+st.set_page_config(
+    page_title="😎",
+)
+
+if not firebase_admin._apps:
+    cred = credentials.Certificate('club-ecd9c-firebase-adminsdk-4xmc7-a36179a49c.json')
+    app = firebase_admin.initialize_app(cred)
+
+
+# st.session_state.clear()
+empty = st.empty()
+
+if 'nickname' not in st.session_state:
+    nickname = st.text_input('닉네임 입력(추후 회원기능 도입)')
+    st.session_state.nickname = nickname
+    
+else:
+    nickname = empty.text_input('닉네임 입력(추후 회원기능 도입)',value=st.session_state.nickname)
+    st.session_state.nickname = nickname
+
+nickname = st.session_state.nickname
+
+st.write(f"Hi, {nickname}🎈")
+db = firestore.client()
+
+@st.experimental_singleton
+def img(img):
+    img = st.image(img,use_column_width=True)
+    return img
+
+# @st.experimental_singleton
+def expander(title):
+    return st.expander(title, expanded=True)
+
 if nickname:
     empty.empty()
-    # st.header('IMI Critical Engineering Club')
+    st.header('IMI Critical Engineering Club')
     with expander('dynamic'):
-        c1, c2, c3 = st.columns([1,1,1])
-
-        with c1:
+        c = st.columns(3)
+        with c[0]:
             img('https://cdn.pixabay.com/photo/2021/03/02/19/26/snowshoes-6063630_960_720.jpg')
             if st.button('배드민턴'):
                 switch_page('배드민턴')
             
-        with c2:
+        with c[1]:
             img('https://cdn.pixabay.com/photo/2019/01/21/13/58/table-tenis-3946115_960_720.jpg')
             if st.button('탁구'):
                 switch_page('탁구')
 
-        with c3:
+        with c[2]:
             img('https://cdn.pixabay.com/photo/2018/03/08/20/36/ball-3209809_960_720.jpg')
-            if st.button('풋살'):
-                switch_page('풋살')
+            if st.button('축구'):
+                switch_page('축구')
 
     with expander('static'):
-        c4, c5, c6 = st.columns([1,1,1])
+        c = st.columns(3)
 
-        with c4:
+        with c[0]:
             img('https://cdn.pixabay.com/photo/2015/11/20/08/17/meat-1052571_960_720.jpg')
             if st.button('파티'):
                 switch_page('파티')
 
-        with c5:
+        with c[1]:
             img('https://cdn.pixabay.com/photo/2016/04/23/20/21/smart-1348189_960_720.jpg')
             if st.button('카풀'):
                 switch_page('카풀')
+
+    logout = st.button('로그아웃')
+    if logout:
+        st.session_state.clear()
+        st.experimental_rerun()
+        # switch_page('club')

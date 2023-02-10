@@ -144,7 +144,7 @@ if nickname :
                     st.info(f"{len(doc_list)}/2 명")
                 st.error(doc_list)
                 st.success('[🚕 네이버지도](%s)' % f'https://map.naver.com/v5/directions/-/14114397.866921965,4540303.012815246,%EA%B3%A0%EC%96%91%ED%8C%A9%ED%86%A0%EC%8A%A4%ED%83%80%EB%94%94%EC%9B%80,1966063934,PLACE_POI/-/transit?c=14111433.1227196,4538425.9290852,12.89,0,0,0,dh')
-                st.warning('[🚗 카카오맵](%s)' % 'https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=,,&rt1=&rt2=%ED%8C%8C%EC%A3%BC%EC%8B%9C%EB%B0%B0%EB%93%9C%EB%AF%BC%ED%84%B4%EC%A0%84%EC%9A%A9%EA%B5%AC%EC%9E%A5&rtIds=,&rtTypes=%27')
+                st.warning('[🚗 카카오맵](%s)' % 'https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=,,&rt1=%EC%9A%B4%EC%A0%95%EC%8B%A0%EB%8F%84%EC%8B%9C%EC%95%84%EC%9D%B4%ED%8C%8C%ED%81%AC&rt2=%ED%8C%8C%EC%A3%BC%EC%8B%9C%EB%B0%B0%EB%93%9C%EB%AF%BC%ED%84%B4%EC%A0%84%EC%9A%A9%EA%B5%AC%EC%9E%A5&rtIds=,&rtTypes=%27')
 
     logout = st.button('로그아웃')
     if logout:

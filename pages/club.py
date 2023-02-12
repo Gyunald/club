@@ -38,7 +38,7 @@ if nickname :
     st.write(f"Hi, {nickname}🎈")
     with st.form("my_form",clear_on_submit=True):
         club = st.selectbox('club',[st.session_state.club])
-        date = st.date_input('날짜',(datetime.datetime.utcnow()+datetime.timedelta(hours=9)).strftime('%Y-%m-%d')
+        date = st.date_input('날짜',(datetime.datetime.utcnow()+datetime.timedelta(hours=9))).strftime('%Y-%m-%d')
         time = st.time_input('시간',value= datetime.time(17,45)).strftime('%H:%M')
 
         empty = st.empty()

@@ -1,34 +1,3 @@
-#     u'stringExample': u'Hello, World!',
-#     u'booleanExample': True,
-#     u'numberExample': 3.14159265,
-#     u'dateExample': datetime.datetime.now(tz=datetime.timezone.utc),
-#     u'arrayExample': [5, True, u'hello'],
-#     u'nullExample': None,
-#     u'objectExample': {
-#         u'a': 5,
-#         u'b': True
-#     }
-# }
-
-# C
-
-# res = collection.document('배드민턴').get().to_dict()
-
-# # R
-# res = collection.get() # returns a list
-
-# for i in res:
-#     st.write(i.to_dict())
-
-# # U
-# res = collection.document('A01').update({
-#     'State': 'Chennai',
-#     'age': 21
-# })
-
-# # D
-# res = collection.document('A01').delete() 
-
 import pandas as pd
 import streamlit as st
 import datetime
@@ -51,11 +20,20 @@ def expander(title):
     return st.expander(title, expanded=True)
 
 if not firebase_admin._apps:
-    cred = credentials.Certificate('club-ecd9c-firebase-adminsdk-4xmc7-a36179a49c.json')
+    cred = credentials.Certificate({
+    "type": st.secrets.type,
+    "project_id": st.secrets.project_id,
+    "private_key_id": st.secrets.private_key_id,
+    "private_key": st.secrets.private_key,
+    "client_email": st.secrets.client_email,
+    "client_id": st.secrets.client_id,
+    "auth_uri": st.secrets.auth_uri,
+    "token_uri": st.secrets.token_uri,
+    "auth_provider_x509_cert_url": st.secrets.auth_provider_x509_cert_url,
+    "client_x509_cert_url": st.secrets.client_x509_cert_url
+    })
     app = firebase_admin.initialize_app(cred)
 
-
-# st.session_state.clear()
 empty = st.empty()
 
 if 'club' not in st.session_state:

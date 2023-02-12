@@ -64,7 +64,6 @@ if nickname :
             '참여' : {},
             '불참' : {},
             '작성자' : nickname,
-            # '부서/나이/연락처' : [part,age,phone]
         }}
         doc_ref = st.session_state.doc_ref.document(club)
 
@@ -106,7 +105,6 @@ if nickname :
 
         with c[i]:
             with st.form(j):
-                st.header(f"{club}")
                 st.header(f"{doc_document.get('날짜')}")
                 st.header(f"{doc_document.get('시간')}")
                 st.subheader(f"{doc_document.get('장소')}")
@@ -144,13 +142,11 @@ if nickname :
                         st.session_state.disabled_불참 = True
                 else:
                     st.info(f"{len(doc_list)}/2 명")
-                st.error(doc_list)
-                st.write(doc_document.get('장소'))
-                
+                st.error(doc_list)                
                 place_kakao = doc_document.get('장소').replace(' ','')
                 
                 url = f"https://dapi.kakao.com/v2/local/search/keyword.json?query={place_kakao}"
-                headers = {"Authorization" : "KakaoAK 5112b33d653427be0da4daf5aac8a437"}
+                headers = {"Authorization" : st.secrets.map}
                 
                 places = requests.get(url,headers=headers).json()['documents'][0]
                 x,y = places['y'], places['x']
@@ -161,7 +157,6 @@ if nickname :
     logout = st.button('로그아웃',type='primary')
     if logout:
         st.session_state.clear()
-        # st.experimental_rerun()
         switch_page('home')
 
 if st.button('홈으로'):

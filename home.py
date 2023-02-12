@@ -69,7 +69,7 @@ if nickname:
             img('https://cdn.pixabay.com/photo/2019/01/21/13/58/table-tenis-3946115_960_720.jpg')
             if st.button('탁구',use_container_width=True):
                 st.session_state.club = '탁구'
-                st.session_state.place = ['문산 국민체육센터','레인보우 탁구클럽']
+                st.session_state.place = ['문산 국민체육센터']
                 st.session_state.doc_ref = db.collection('activity')
                 switch_page('club')
 
@@ -77,7 +77,7 @@ if nickname:
             img('https://cdn.pixabay.com/photo/2018/03/08/20/36/ball-3209809_960_720.jpg')
             if st.button('축구',use_container_width=True):
                 st.session_state.club = '축구'
-                st.session_state.place = ['파주시 축구장','고양시 축구장']
+                st.session_state.place = ['당동리 풋살구장','FC 파주 풋살장']
                 st.session_state.doc_ref = db.collection('activity')
                 switch_page('club')
 

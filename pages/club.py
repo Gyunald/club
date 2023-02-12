@@ -162,7 +162,7 @@ if nickname :
     if logout:
         st.session_state.clear()
         # st.experimental_rerun()
-        switch_page('club')
+        switch_page('home')
 
 if st.button('홈으로'):
-    switch_page('club')
+    switch_page('home')

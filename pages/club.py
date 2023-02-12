@@ -155,7 +155,7 @@ if nickname :
                 places = requests.get(url,headers=headers).json()['documents'][0]
                 x,y = places['y'], places['x']
                 
-                st.success('[🚕 네이버지도](%s)' % 'https://map.naver.com/v5/directions/-/14108018.981800783,4539337.245168194,%EA%B2%BD%EA%B8%B0%EB%8F%84%20%ED%8C%8C%EC%A3%BC%EC%8B%9C%20%EC%8B%AC%ED%95%99%EC%82%B0%EB%A1%9C%20384,,ADDRESS_POI/-/car?c=14,0,0,0,dh')
+                st.success('[🚕 네이버지도](%s)' % f"https://map.naver.com/v5/directions/-/{y},{x}/transit?c=12.55,0,0,0,dh")
                 st.warning('[🚗 카카오맵](%s)' % f'https://map.kakao.com/link/to/{place_kakao},{x},{y}')
 
     logout = st.button('로그아웃',type='primary')

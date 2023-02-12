@@ -63,7 +63,7 @@ if nickname:
                 st.session_state.club = '배드민턴'
                 st.session_state.place = ['고양 팩토 스타디움','파주시 배드민턴 전용구장']
                 st.session_state.doc_ref = db.collection('activity')
-                switch_page('동호회')
+                switch_page('club')
             
         with c[1]:
             img('https://cdn.pixabay.com/photo/2019/01/21/13/58/table-tenis-3946115_960_720.jpg')
@@ -71,7 +71,7 @@ if nickname:
                 st.session_state.club = '탁구'
                 st.session_state.place = ['파주시 탁구장','고양시 탁구장']
                 st.session_state.doc_ref = db.collection('activity')
-                switch_page('동호회')
+                switch_page('club')
 
         with c[2]:
             img('https://cdn.pixabay.com/photo/2018/03/08/20/36/ball-3209809_960_720.jpg')
@@ -79,7 +79,7 @@ if nickname:
                 st.session_state.club = '축구'
                 st.session_state.place = ['파주시 축구장','고양시 축구장']
                 st.session_state.doc_ref = db.collection('activity')
-                switch_page('동호회')
+                switch_page('club')
 
     with expander('static'):
         c = st.columns(3)
@@ -90,7 +90,7 @@ if nickname:
                 st.session_state.club = '파티'
                 st.session_state.place = ['삼겹살','닭발','치킨']
                 st.session_state.doc_ref = db.collection('static')
-                switch_page('동호회')
+                switch_page('club')
 
         with c[1]:
             img('https://cdn.pixabay.com/photo/2016/04/23/20/21/smart-1348189_960_720.jpg')
@@ -98,7 +98,7 @@ if nickname:
                 st.session_state.club = '카풀'
                 st.session_state.place = ['서울','운정','일산','김포']
                 st.session_state.doc_ref = db.collection('static')
-                switch_page('동호회')
+                switch_page('club')
 
     logout = st.button('로그아웃',type='primary')
     if logout:

@@ -39,7 +39,7 @@ if nickname :
     with st.form("my_form",clear_on_submit=True):
         club = st.selectbox('club',[st.session_state.club])
         date = st.date_input('날짜',(datetime.datetime.utcnow()+datetime.timedelta(hours=9)).strftime('%Y-%m-%d')
-        time = st.time_input('시간',value=(datetime.time(17,45)+timedelta(days=1)).strftime('%H:%M')
+        time = st.time_input('시간',value= datetime.time(17,45)).strftime('%H:%M')
 
         empty = st.empty()
         place = empty.selectbox('장소',st.session_state.place)

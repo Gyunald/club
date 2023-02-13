@@ -43,7 +43,6 @@ max_date = now_date.replace(year=now_date.year+1,month=1,day=1) - timedelta(days
 if nickname :
     if st.session_state.club != '' :
         st.subheader(f"Hi, {nickname}🎈")
-        st.write('---')
         with st.form("my_form",clear_on_submit=True):
             club = st.selectbox('club',[st.session_state.club])
             date = st.date_input('날짜',value=now_date,min_value=now_date,max_value=max_date).strftime('%m-%d')

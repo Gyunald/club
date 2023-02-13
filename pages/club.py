@@ -5,13 +5,13 @@ import requests
 from streamlit_extras.switch_page_button import switch_page
 from firebase_admin import firestore
 
-@st.cache_data()
-def load_lottie(url:str):
-    r = requests.get(url)
+# @st.cache_data()
+# def load_lottie(url:str):
+#     r = requests.get(url)
 
-    if r.status_code != 200:
-        return None
-    return r.json()
+#     if r.status_code != 200:
+#         return None
+#     return r.json()
 
 def disabled_참():
     st.session_state.disabled_참 = True

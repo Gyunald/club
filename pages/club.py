@@ -3,7 +3,6 @@ import streamlit as st
 import datetime
 import requests
 from streamlit_extras.switch_page_button import switch_page
-
 from firebase_admin import firestore
 
 @st.cache_data()
@@ -17,6 +16,8 @@ def load_lottie(url:str):
 def disabled_참():
     st.session_state.disabled_참 = True
     st.session_state.disabled_불참 = False
+    
+
 def disabled_불참():
     st.session_state.disabled_참 = False
     st.session_state.disabled_불참 = True
@@ -30,6 +31,10 @@ else:
     nickname = empty.text_input('닉네임 입력(추후 회원기능 도입)',value=st.session_state.nickname)
     st.session_state.nickname = nickname
     empty.empty()
+
+if 'type_참' not in st.session_state:
+    st.session_state.type_참 = ''
+    st.session_state.type_불참 = ''
 
 db = firestore.client()
 
@@ -56,11 +61,13 @@ if nickname :
             if place not in st.session_state.place:
                 st.session_state.place.remove(place)
                 st.experimental_rerun()
+
         data = { f"{date}-{place}" : {
             '시간' : time,
             '날짜' : date,
             '장소' : place,
-            '참가자' : [],
+            '참가목록' : [],
+            '불참가목록' : [],
             '참여' : {},
             '불참' : {},
             '작성자' : nickname,
@@ -89,7 +96,8 @@ if nickname :
 
     for i,j in zip(range(len(c)), sorted(doc.keys(),reverse=True)):
         doc_document = doc[j]
-        doc_list = doc_document.get('참가자')
+        doc_list = doc_document.get('참가목록')
+        doc_list_non = doc_document.get('불참가목록')
         standard = (datetime.datetime.utcnow()+datetime.timedelta(hours=9)).strftime('%Y-%m-%d') > doc_document['날짜']
         k = f"disabled_{j}"
         if k not in st.session_state:
@@ -103,13 +111,27 @@ if nickname :
         if standard:
             st.session_state[k] = True
 
+        if nickname in doc_list:
+            st.session_state.type_참 = 'primary'
+            st.session_state.type_불참 = 'secondary'
+            
+        elif nickname in doc_list_non:
+            st.session_state.type_참 = 'secondary'
+            st.session_state.type_불참 = 'primary'
+
+        else: 
+            st.session_state.type_참 = 'secondary'
+            st.session_state.type_불참 = 'secondary'
+
         with c[i]:
             with st.form(j):
                 st.header(f"{doc_document.get('날짜')}")
                 st.header(f"{doc_document.get('시간')}")
                 st.subheader(f"{doc_document.get('장소')}")
-                참 = st.form_submit_button('참여',on_click=disabled_참, disabled=st.session_state[k],use_container_width=True,type='primary')
-                불참 = st.form_submit_button('불참', on_click=disabled_불참, disabled=st.session_state[k],use_container_width=True)
+
+                참 = st.form_submit_button('참여',on_click=disabled_참, disabled=st.session_state[k],use_container_width=True, type= st.session_state.type_참)
+                불참 = st.form_submit_button('불참', on_click=disabled_불참, disabled=st.session_state[k],use_container_width=True,type= st.session_state.type_불참)
+
                 if doc_document.get('작성자') == nickname:
                     삭제 = st.form_submit_button('삭제',use_container_width=True,type='primary')
                     if 삭제:
@@ -123,15 +145,20 @@ if nickname :
                         if nickname not in doc_list:
                             doc_list.append(nickname)
                             doc_application[nickname] = doc_time
-                            doc_ref.update(doc)
-#                             st.balloons()
+                            if nickname in doc_list_non:
+                                doc_list_non.remove(nickname)
+                        doc_ref.update(doc)
+                        st.experimental_rerun()
 
                 if 불참:
                     doc_cancel = doc_document.get('불참')
-                    doc_cancel[nickname] = doc_time
-                    if nickname in doc_list :
-                        doc_list.remove(nickname)
+                    if nickname not in doc_list_non :
+                        doc_list_non.append(nickname)
+                        doc_cancel[nickname] = doc_time
+                        if nickname in doc_list:
+                            doc_list.remove(nickname)
                     doc_ref.update(doc)
+                    st.experimental_rerun()
 
                 if len(doc_list) == 2:
                     st.error(f"{len(doc_list)}/2 명")
@@ -142,12 +169,11 @@ if nickname :
                         st.session_state.disabled_불참 = True
                 else:
                     st.info(f"{len(doc_list)}/2 명")
-                st.error(doc_list)                
+                st.error(doc_list)
+                st.info(doc_list_non)
                 word = doc_document.get('장소').replace(' ','')
-                
                 st.success('[🚕 네이버지도](%s)' % f"https://map.naver.com/v5/search/{word}")
-                st.warning('[🚗 카카오맵](%s)' % f"https://map.kakao.com/link/search/{word}")
-    
+                st.warning('[🚗 카카오맵](%s)' % f'https://map.kakao.com/link/search/{word}')
     logout = st.button('로그아웃',type='primary')
     if logout:
         st.session_state.clear()

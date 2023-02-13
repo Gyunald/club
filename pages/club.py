@@ -124,7 +124,7 @@ if nickname :
                             doc_list.append(nickname)
                             doc_application[nickname] = doc_time
                             doc_ref.update(doc)
-                            st.balloons()
+#                             st.balloons()
 
                 if 불참:
                     doc_cancel = doc_document.get('불참')
@@ -152,8 +152,6 @@ if nickname :
     if logout:
         st.session_state.clear()
         switch_page('home')
-    b = st.button('balloons')
-    if b :
-        st.snow()
+
 if st.button('홈으로'):
     switch_page('home')

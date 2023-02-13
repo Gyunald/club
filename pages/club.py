@@ -153,9 +153,11 @@ if nickname :
                 
                 headers_kakao = {"Authorization" : "KakaoAK 5112b33d653427be0da4daf5aac8a437"}
                 
-                res_naver = requests.get(url_naver,headers=headers_naver).json()
+                res_naver = requests.get(url_naver,headers=headers_naver).json()['route']['traoptimal'][0]['summary']
+                x_naver, y_naver = res_naver['start']['location'][0] , res_naver['start']['location'][1]
+                
                 res_kakao = requests.get(url_kakao,headers=headers_kakao).json()['documents'][0]
-                x,y = res_kakao['y'], res_kakao['x']
+                x_kakao,y_kakao = res_kakao['y'], res_kakao['x']
                 
                 st.success('[🚕 네이버지도](%s)' % f"nmap://map?lat=37.4979502&lng=127.0276368&zoom=20&appname=imi-club.streamlit.app")
                 st.warning('[🚗 카카오맵](%s)' % f'https://map.kakao.com/link/to/{place_kakao},{x_kakao},{y_kakao}')

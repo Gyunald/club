@@ -1,6 +1,6 @@
 import pandas as pd
 import streamlit as st
-import datetime
+from datetime import datetime, timedelta, time
 import requests
 from streamlit_extras.switch_page_button import switch_page
 from firebase_admin import firestore
@@ -39,12 +39,15 @@ if 'type_참' not in st.session_state:
 db = firestore.client()
 
 nickname = st.session_state.nickname
+now_date = (datetime.utcnow()+timedelta(hours=9))
+max_date = now_date.replace(year=now_date.year+1,month=1,day=1) - timedelta(days=1)
+
 if nickname :
     st.write(f"Hi, {nickname}🎈")
     with st.form("my_form",clear_on_submit=True):
         club = st.selectbox('club',[st.session_state.club])
-        date = st.date_input('날짜',(datetime.datetime.utcnow()+datetime.timedelta(hours=9))).strftime('%Y-%m-%d')
-        time = st.time_input('시간',value= datetime.time(17,45)).strftime('%H:%M')
+        date = st.date_input('날짜',value=now_date,min_value=now_date,max_value=max_date).strftime('%Y-%m-%d')
+        time = st.time_input('시간',value= time(17,45)).strftime('%H:%M')
         
         empty = st.empty()
         place = empty.selectbox('장소',st.session_state.place,help='장소를 직접 입력하려면 장소추가 버튼을 누르세요.')
@@ -81,29 +84,27 @@ if nickname :
 
         if submitted :
             if date_check not in doc_ref.get().to_dict() :
+                st.success('모임이 생성되었습니다.')
                 doc_ref.update(data)
-
-            elif date < (datetime.datetime.utcnow()+datetime.timedelta(hours=9)).strftime('%Y-%m-%d'):
-                st.warning('날짜를 확인하세요.')
 
             else:
                 st.warning('이미 같은장소에 모임이 있습니다.')
 
     st.write('---')
-    # rerun = st.button('새로고침')
+    rerun = st.button('새로고침')
 
-    # if rerun:
-    #     st.experimental_rerun()
+    if rerun:
+        st.experimental_rerun()
 
     c = st.columns(3)    
     doc = doc_ref.get().to_dict()
-    doc_time = (datetime.datetime.utcnow()+datetime.timedelta(hours=9)).strftime('%Y-%m-%d-%H:%M')
+    doc_time = now_date.strftime('%Y-%m-%d-%H:%M')
 
     for i,j in zip(range(len(c)), sorted(doc.keys(),reverse=True)):
         doc_document = doc[j]
         doc_list = doc_document.get('참가목록')
         doc_list_non = doc_document.get('불참가목록')
-        standard = (datetime.datetime.utcnow()+datetime.timedelta(hours=9)).strftime('%Y-%m-%d') > doc_document['날짜']
+        standard = now_date.strftime('%Y-%m-%d') > doc_document['날짜']
         
         k = f"disabled_{j}"
         if k not in st.session_state:

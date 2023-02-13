@@ -145,7 +145,7 @@ if nickname :
                 st.error(doc_list)                
                 place_naver = doc_document.get('장소').replace(' ','')
                 place_kakao = doc_document.get('장소').replace(' ','')
-                url_naver = f'https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving?start=126.7626527103602,37.763437024584206,&&goal=126.791850394664,37.7224135020587'
+                url_naver = f'https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving?start=126.78352322933301,37.869667491468014,&&goal=126.791850394664,37.7224135020587'
                 url_kakao = f"https://dapi.kakao.com/v2/local/search/keyword.json?query={place_kakao}"
                 headers_naver = {
                     'X-NCP-APIGW-API-KEY-ID' : 'foqwb8f3u4',
@@ -159,8 +159,7 @@ if nickname :
                 res_kakao = requests.get(url_kakao,headers=headers_kakao).json()['documents'][0]
                 x_kakao,y_kakao = res_kakao['y'], res_kakao['x']
                 
-                st.success('[🚕 네이버지도](%s)' % f'nmap://map?lat=37.4979502&lng=127.0276368&zoom=20&appname=com.example.myapp')
-                st.write("check out this [link](nmap://map?lat=37.4979502&lng=127.0276368&zoom=20&appname=com.example.myappp)")
+                st.success('[🚕 네이버지도](%s)' % f"https://map.naver.com/v5/search/{place_naver}?c=18,0,0,0,dh&isCorrectAnswer=true")
                 st.warning('[🚗 카카오맵](%s)' % f'https://map.kakao.com/link/to/{place_kakao},{x_kakao},{y_kakao}')
 
     logout = st.button('로그아웃',type='primary')

@@ -157,8 +157,8 @@ if nickname :
                 res_kakao = requests.get(url_kakao,headers=headers_kakao).json()['documents'][0]
                 x,y = res_kakao['y'], res_kakao['x']
                 
-                st.success('[🚕 네이버지도](%s)' % f"https://map.naver.com/v5/directions/-/{y},{x},{place_kakao},PLACE_POI/-/car?c=16.22,0,0,0,dh&isCorrectAnswer=true")
-                st.warning('[🚗 카카오맵](%s)' % f'https://map.kakao.com/link/to/{place_kakao},{x},{y}')
+                st.success('[🚕 네이버지도](%s)' % f"nmap://route/car?dlat={y_naver}&dlng={x_naver}&dname={place_naver}&appname=com.example.myapp")
+                st.warning('[🚗 카카오맵](%s)' % f'https://map.kakao.com/link/to/{place_kakao},{x_kakao},{y_kakao}')
 
     logout = st.button('로그아웃',type='primary')
     if logout:

@@ -159,7 +159,7 @@ if nickname :
                 res_kakao = requests.get(url_kakao,headers=headers_kakao).json()['documents'][0]
                 x_kakao,y_kakao = res_kakao['y'], res_kakao['x']
                 
-                st.success('[🚕 네이버지도](%s)' % f"nmap://map?lat=37.4979502&lng=127.0276368&zoom=20&appname=imi-club.streamlit.app")
+                st.success('[🚕 네이버지도](%s)' % f'nmap://map?lat=37.4979502&lng=127.0276368&zoom=20&appname=com.example.myapp')
                 st.warning('[🚗 카카오맵](%s)' % f'https://map.kakao.com/link/to/{place_kakao},{x_kakao},{y_kakao}')
 
     logout = st.button('로그아웃',type='primary')

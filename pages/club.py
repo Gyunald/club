@@ -154,6 +154,6 @@ if nickname :
         switch_page('home')
     b = st.button('balloons')
     if b :
-        st.balloons()
+        st.snow()
 if st.button('홈으로'):
     switch_page('home')

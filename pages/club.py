@@ -123,8 +123,8 @@ if nickname :
                         if nickname not in doc_list:
                             doc_list.append(nickname)
                             doc_application[nickname] = doc_time
-                        doc_ref.update(doc)
-                        st.balloons()
+                            doc_ref.update(doc)
+                            st.balloons()
 
                 if 불참:
                     doc_cancel = doc_document.get('불참')

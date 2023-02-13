@@ -6,6 +6,11 @@ from streamlit_extras.switch_page_button import switch_page
 from firebase_admin import firestore
 
 
+st.set_page_config(
+    page_title="😎",
+    # initial_sidebar_state="collapsed",
+)
+
 def disabled_참():
     st.session_state.disabled_참 = True
     st.session_state.disabled_불참 = False
@@ -37,11 +42,12 @@ max_date = now_date.replace(year=now_date.year+1,month=1,day=1) - timedelta(days
 
 if nickname :
     if st.session_state.club != '' :
-        st.write(f"Hi, {nickname}🎈")
+        st.subheader(f"Hi, {nickname}🎈")
+        st.write('---')
         with st.form("my_form",clear_on_submit=True):
             club = st.selectbox('club',[st.session_state.club])
-            date = st.date_input('날짜',value=now_date,min_value=now_date,max_value=max_date).strftime('%Y-%m-%d')
-            time = st.time_input('시간',value= time(17,45)).strftime('%H:%M')
+            date = st.date_input('날짜',value=now_date,min_value=now_date,max_value=max_date).strftime('%m-%d')
+            times = st.time_input('시간',value= time(17,30)).strftime('%H:%M')
             
             empty = st.empty()
             place = empty.selectbox('장소',st.session_state.place,help='장소를 직접 입력하려면 장소추가 버튼을 누르세요.')
@@ -61,7 +67,7 @@ if nickname :
                     st.experimental_rerun()
 
             data = { f"{date}-{place}" : {
-                '시간' : time,
+                '시간' : times,
                 '날짜' : date,
                 '장소' : place,
                 '참가목록' : [],
@@ -78,17 +84,17 @@ if nickname :
 
             if submitted :
                 if date_check not in doc_ref.get().to_dict() :
-                    st.success('모임이 생성되었습니다.')
+                    st.warning('모임이 생성되었습니다.')
                     doc_ref.update(data)
 
                 else:
                     st.warning('이미 같은장소에 모임이 있습니다.')
 
         st.write('---')
-        rerun = st.button('새로고침')
+        # rerun = st.button('새로고침')
 
-        if rerun:
-            st.experimental_rerun()
+        # if rerun:
+        #     st.experimental_rerun()
 
         c = st.columns(3)    
         doc = doc_ref.get().to_dict()
@@ -98,7 +104,7 @@ if nickname :
             doc_document = doc[j]
             doc_list = doc_document.get('참가목록')
             doc_list_non = doc_document.get('불참가목록')
-            standard = now_date.strftime('%Y-%m-%d') > doc_document['날짜']
+            standard = now_date.strftime('%m-%d') > doc_document['날짜']
             
             k = f"disabled_{j}"
             if k not in st.session_state:
@@ -126,13 +132,11 @@ if nickname :
 
             with c[i]:
                 with st.form(j):
-                    st.header(f"{doc_document.get('날짜')}")
-                    st.header(f"{doc_document.get('시간')}")
-                    st.subheader(f"{doc_document.get('장소')}")
-
+                    st.write(f"##### {doc_document.get('날짜')} 🏸 {doc_document.get('시간')}")
+                    st.write(f"{doc_document.get('장소')}")
+                    
                     참 = st.form_submit_button('참여',on_click=disabled_참, disabled=st.session_state[k],use_container_width=True, type= st.session_state.type_참)
                     불참 = st.form_submit_button('불참', on_click=disabled_불참, disabled=st.session_state[k],use_container_width=True,type= st.session_state.type_불참)
-
                     if doc_document.get('작성자') == nickname:
                         삭제 = st.form_submit_button('삭제',use_container_width=True,type='primary')
                         if 삭제:
@@ -162,6 +166,17 @@ if nickname :
                                 doc_document['인원수'] -=1
                         doc_ref.update(doc)
                         st.experimental_rerun()
+                        
+                    with st.expander('인원'):
+                        if not doc_list:
+                            st.info('🙈')
+                        else:
+                            st.info(doc_list)
+                        
+                        if not doc_list_non:
+                            st.error('🙉')
+                        else:
+                            st.error(doc_list_non)
 
                     if doc_document['인원수'] == people:
                         st.error(f"{doc_document['인원수']}/{people} 명")
@@ -172,17 +187,17 @@ if nickname :
                             st.session_state.disabled_불참 = True
                     else:
                         st.info(f"{doc_document['인원수']}/{people} 명")
-                    st.error(doc_list)
-                    st.info(doc_list_non)
+                        
                     word = doc_document.get('장소').replace(' ','')
                     st.success('[🚕 네이버지도](%s)' % f"https://map.naver.com/v5/search/{word}")
                     st.warning('[🚗 카카오맵](%s)' % f'https://map.kakao.com/link/search/{word}')
+                    
         logout = st.button('로그아웃',type='primary')
         if logout:
             st.session_state.clear()
             switch_page('home')
     else:
-        st.error('홈에서 클럽을 선택하세요.')
+        st.warning('홈에서 클럽을 선택하세요.')
 else:
         st.warning('홈에서 로그인하세요.')
 

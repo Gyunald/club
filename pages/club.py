@@ -52,7 +52,7 @@ if nickname :
         button_place = st.form_submit_button('장소추가',use_container_width=True)
         button_place_del = st.form_submit_button('장소삭제',use_container_width=True)
         if button_place:
-            place = empty.text_input('place',placeholder='장소 직접입력 후 리스트에 추가',max_chars=30,help='장소추가 버튼을 한번 더 누르세요.')
+            place = empty.text_input('place',placeholder='장소를 정확하게 입력하세요',max_chars=30,help='장소추가 버튼을 한번 더 누르세요.')
             if place != '' and place not in st.session_state.place:
                 st.session_state.place.append(place)
                 place = empty.selectbox('place',st.session_state.place,key='place_append')

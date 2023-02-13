@@ -152,6 +152,8 @@ if nickname :
     if logout:
         st.session_state.clear()
         switch_page('home')
-
+    b = st.button('balloons')
+    if b :
+        st.balloons()
 if st.button('홈으로'):
     switch_page('home')

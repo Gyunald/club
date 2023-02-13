@@ -160,7 +160,7 @@ if nickname :
                 x_kakao,y_kakao = res_kakao['y'], res_kakao['x']
                 
                 st.success('[🚕 네이버지도](%s)' % f"https://map.naver.com/v5/search/{place_naver}?c=18,0,0,0,dh&isCorrectAnswer=true")
-                st.warning('[🚗 카카오맵](%s)' % f'https://map.kakao.com/link/to/{place_kakao},{x_kakao},{y_kakao}')
+                st.warning('[🚗 카카오맵](%s)' % f'https://map.kakao.com/link/map/{place_kakao},{x_kakao},{y_kakao}')
 
     logout = st.button('로그아웃',type='primary')
     if logout:

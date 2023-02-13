@@ -52,7 +52,7 @@ if nickname :
         button_place = st.form_submit_button('장소추가',use_container_width=True)
         button_place_del = st.form_submit_button('장소삭제',use_container_width=True)
         if button_place:
-            place = empty.text_input('place',placeholder='장소를 정확하게 입력하세요',max_chars=30,help='장소추가 버튼을 한번 더 누르세요.')
+            place = empty.text_input('place',placeholder='장소를 정확하게 입력하세요.',max_chars=30,help='장소추가 버튼을 한번 더 누르세요.')
             if place != '' and place not in st.session_state.place:
                 st.session_state.place.append(place)
                 place = empty.selectbox('place',st.session_state.place,key='place_append')
@@ -80,17 +80,20 @@ if nickname :
         date_check = data[f"{date}-{place}"].get('날짜') +'-'+ data[f"{date}-{place}"].get('장소')
 
         if submitted :
-            if date_check not in doc_ref.get().to_dict():
+            if date_check not in doc_ref.get().to_dict() :
                 doc_ref.update(data)
-                
+
+            elif date < (datetime.datetime.utcnow()+datetime.timedelta(hours=9)).strftime('%Y-%m-%d'):
+                st.warning('날짜를 확인하세요.')
+
             else:
                 st.warning('이미 같은장소에 모임이 있습니다.')
 
     st.write('---')
-#     rerun = st.button('새로고침')
+    # rerun = st.button('새로고침')
 
-#     if rerun:
-#         st.experimental_rerun()
+    # if rerun:
+    #     st.experimental_rerun()
 
     c = st.columns(3)    
     doc = doc_ref.get().to_dict()
@@ -106,7 +109,7 @@ if nickname :
         if k not in st.session_state:
             st.session_state[k] = False
 
-        if len(doc_list) == people:
+        if doc_document['인원수'] == people:
             st.session_state[k] = True
             if nickname in doc_list:
                 st.session_state[k] = False
@@ -143,7 +146,7 @@ if nickname :
                             doc_ref.update({f"{doc_document.get('날짜')}-{doc_document.get('장소')}" : firestore.DELETE_FIELD})
                             st.experimental_rerun()
                 if 참 :
-                    if len(doc_list) < people:
+                    if doc_document['인원수'] < people:
                         doc_application = doc_document.get('참여')
                         if nickname not in doc_list:
                             doc_list.append(nickname)
@@ -165,15 +168,15 @@ if nickname :
                     doc_ref.update(doc)
                     st.experimental_rerun()
 
-                if len(doc_list) == people:
-                    st.error(f"{len(doc_document['인원수'])}/{people} 명")
+                if doc_document['인원수'] == people:
+                    st.error(f"{doc_document['인원수']}/{people} 명")
                     if nickname in doc_list:
                         st.session_state.disabled_불참 = False
                     else:
                         st.session_state.disabled_참 = True
                         st.session_state.disabled_불참 = True
                 else:
-                    st.info(f"{len(doc_list)}/{people} 명")
+                    st.info(f"{doc_document['인원수']}/{people} 명")
                 st.error(doc_list)
                 st.info(doc_list_non)
                 word = doc_document.get('장소').replace(' ','')

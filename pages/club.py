@@ -154,7 +154,7 @@ if nickname :
                                     doc_list_non.remove(nickname)
                             doc_ref.update(doc)
                             st.experimental_rerun()
-                            st.balloons()
+                        st.balloons()
 
 
                     if 불참:

@@ -49,12 +49,12 @@ else:
 
 nickname = st.session_state.nickname
 
-st.subheader(f"Hi, {nickname}🎈")
+st.write(f"### Hi, {nickname}🎈")
 db = firestore.client()
 
 if nickname:
     empty.empty()
-    st.write('# IMI Critical Engineering Club')
+    st.write('## IMI Critical Engineering Club')
     with expander('dynamic'):
         c = st.columns(3)
         with c[0]:

@@ -150,11 +150,12 @@ if nickname :
                                 doc_list.append(nickname)
                                 doc_document['인원수'] +=1
                                 doc_application[nickname] = doc_time
+                                st.balloons()
                                 if nickname in doc_list_non:
                                     doc_list_non.remove(nickname)
 #                             doc_ref.update(doc)
 #                             st.experimental_rerun()
-                            st.balloons()
+
 
                     if 불참:
                         doc_cancel = doc_document.get('불참')

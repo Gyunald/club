@@ -5,14 +5,15 @@ import requests
 from streamlit_extras.switch_page_button import switch_page
 from firebase_admin import firestore
 
+
 st.set_page_config(
     page_title="😎",
 )
 
 def disabled_참():
     st.session_state.disabled_참 = True
-    st.session_state.disabled_불참 = False
-    
+    st.session_state.disabled_불참 = False    
+
 def disabled_불참():
     st.session_state.disabled_참 = False
     st.session_state.disabled_불참 = True
@@ -50,6 +51,10 @@ if nickname :
                 if st.session_state.club == '카풀':
                     place = st.text_input('장소',value='회사-',placeholder='경유지와 도착지를 입력하세요.',max_chars=30,help='회사-서울역-강남역')
                     people = st.number_input('정원',value=4,max_value=4,help='최대 4명')
+
+                elif st.session_state.club == '회식':
+                    place = st.text_input('장소',placeholder='장소와 메뉴를 입력하세요.',max_chars=30,help='지역-메뉴')
+                    people = st.number_input('정원',value=4,max_value=30,help='최대 30명')                 
                 else:
                     place = empty.selectbox('장소',st.session_state.place,help='장소를 직접 입력하려면 장소추가 버튼을 누르세요.')
                     people = st.number_input('정원',value=10,max_value=30,help='최대 30명')
@@ -92,7 +97,7 @@ if nickname :
                     else:
                         st.warning('이미 같은장소에 모임이 있습니다.')
 
-#         st.write('---')
+        # st.write('---')
         # rerun = st.button('새로고침')
 
         # if rerun:

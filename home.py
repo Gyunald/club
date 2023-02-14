@@ -9,7 +9,6 @@ from firebase_admin import firestore
 
 st.set_page_config(
     page_title="😎",
-    initial_sidebar_state="collapsed",
 )
 
 st.cache_resource()

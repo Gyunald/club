@@ -154,7 +154,7 @@ if nickname :
                                     doc_list_non.remove(nickname)
                             doc_ref.update(doc)
                             st.experimental_rerun()
-                        st.balloons()
+                            st.balloons()
 
 
                     if 불참:
@@ -167,7 +167,7 @@ if nickname :
                                 doc_document['인원수'] -=1
                                 
                             doc_ref.update(doc)
-                            st.experimental_rerun()
+#                             st.experimental_rerun()
                         
                     with st.expander('인원'):
                         if not doc_list:

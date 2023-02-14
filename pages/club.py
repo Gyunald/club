@@ -11,6 +11,10 @@ st.set_page_config(
     # initial_sidebar_state="collapsed",
 )
 
+b = st.button('balloons')
+    if b :
+        st.balloons()
+
 def disabled_참():
     st.session_state.disabled_참 = True
     st.session_state.disabled_불참 = False

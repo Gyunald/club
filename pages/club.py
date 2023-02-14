@@ -42,7 +42,7 @@ max_date = now_date.replace(year=now_date.year+1,month=1,day=1) - timedelta(days
 
 if nickname :
     if st.session_state.club != '' :
-        st.subheader(f"Hi, {nickname}🎈")
+        st.write(f"### Hi, {nickname}🎈")
         with st.expander('모임생성'):
             with st.form("my_form",clear_on_submit=True):
                 club = st.selectbox('클럽',[st.session_state.club])

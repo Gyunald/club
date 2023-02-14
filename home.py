@@ -68,7 +68,7 @@ if nickname:
         with c[1]:
             img('https://cdn.pixabay.com/photo/2019/01/21/13/58/table-tenis-3946115_960_720.jpg')
             if st.button('탁구',use_container_width=True):
-                st.session_state.club = ' 탁구'
+                st.session_state.club = '탁구'
                 st.session_state.place = ['문산 국민체육센터']
                 st.session_state.doc_ref = db.collection('dynamic')
                 switch_page('club')

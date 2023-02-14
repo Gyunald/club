@@ -8,12 +8,13 @@ from firebase_admin import firestore
 
 st.set_page_config(
     page_title="😎",
-    # initial_sidebar_state="collapsed",
+    initial_sidebar_state="collapsed",
 )
 
 def disabled_참():
     st.session_state.disabled_참 = True
-    st.session_state.disabled_불참 = False    
+    st.session_state.disabled_불참 = False
+    
 
 def disabled_불참():
     st.session_state.disabled_참 = False
@@ -49,8 +50,12 @@ if nickname :
                 times = st.time_input('시간',value= time(17,30)).strftime('%H:%M')
 
                 empty = st.empty()
-                place = empty.selectbox('장소',st.session_state.place,help='장소를 직접 입력하려면 장소추가 버튼을 누르세요.')
-                people = st.number_input('정원',value=10,max_value=30,help='최대인원 30명')
+                if st.session_state.club == '카풀':
+                    place = st.text_input('장소',value='회사-',placeholder='경유지와 도착지를 입력하세요.',max_chars=30,help='회사-서울역-강남역')
+                    people = st.number_input('정원',value=4,max_value=4,help='최대 4명')
+                else:
+                    place = empty.selectbox('장소',st.session_state.place,help='장소를 직접 입력하려면 장소추가 버튼을 누르세요.')
+                    people = st.number_input('정원',value=10,max_value=30,help='최대 30명')
                 button_place = st.form_submit_button('장소추가',use_container_width=True)
                 button_place_del = st.form_submit_button('장소삭제',use_container_width=True)
                 if button_place:
@@ -84,12 +89,13 @@ if nickname :
                 if submitted :
                     if date_check not in doc_ref.get().to_dict() :
                         st.warning('모임이 생성되었습니다.')
+                        st.balloons()
                         doc_ref.update(data)
 
                     else:
                         st.warning('이미 같은장소에 모임이 있습니다.')
 
-#         st.write('---')
+        st.write('---')
         # rerun = st.button('새로고침')
 
         # if rerun:
@@ -132,7 +138,7 @@ if nickname :
             with c[i]:
                 with st.form(j):
                     st.write(f"##### {doc_document.get('날짜')} 🏸 {doc_document.get('시간')}")
-                    st.write(f"{doc_document.get('장소')}")
+                    st.write(f"###### {doc_document.get('장소')}")
                     
                     참 = st.form_submit_button('참여',on_click=disabled_참, disabled=st.session_state[k],use_container_width=True, type= st.session_state.type_참)
                     불참 = st.form_submit_button('불참', on_click=disabled_불참, disabled=st.session_state[k],use_container_width=True,type= st.session_state.type_불참)
@@ -142,21 +148,20 @@ if nickname :
                             check = st.text_input('렬루?',placeholder="'y' 치고 클릭").lower()
                             if check == 'y':
                                 doc_ref.update({f"{doc_document.get('날짜')}-{doc_document.get('장소')}" : firestore.DELETE_FIELD})
-                                st.experimental_rerun()
+                                st.experimental_rerun()                                
                     if 참 :
                         if doc_document['인원수'] < people:
                             doc_application = doc_document.get('참여')
                             if nickname not in doc_list:
-                                st.balloons()
                                 doc_list.append(nickname)
-                                doc_document['인원수'] +=1                                
+                                doc_document['인원수'] +=1
                                 doc_application[nickname] = doc_time
+                                
                                 if nickname in doc_list_non:
                                     doc_list_non.remove(nickname)
-                            doc_ref.update(doc)
-                            st.experimental_rerun()
 
-
+                                doc_ref.update(doc)
+                                st.experimental_rerun()
 
                     if 불참:
                         doc_cancel = doc_document.get('불참')
@@ -166,7 +171,7 @@ if nickname :
                             if nickname in doc_list:
                                 doc_list.remove(nickname)
                                 doc_document['인원수'] -=1
-                                
+
                             doc_ref.update(doc)
                             st.experimental_rerun()
                         

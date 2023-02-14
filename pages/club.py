@@ -147,10 +147,10 @@ if nickname :
                         if doc_document['인원수'] < people:
                             doc_application = doc_document.get('참여')
                             if nickname not in doc_list:
+                                st.balloons()
                                 doc_list.append(nickname)
                                 doc_document['인원수'] +=1
                                 doc_application[nickname] = doc_time
-                                st.balloons()
                                 if nickname in doc_list_non:
                                     doc_list_non.remove(nickname)
 #                             doc_ref.update(doc)

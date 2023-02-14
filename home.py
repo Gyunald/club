@@ -9,6 +9,7 @@ from firebase_admin import firestore
 
 st.set_page_config(
     page_title="😎",
+    initial_sidebar_state="collapsed",
 )
 
 st.cache_resource()
@@ -96,12 +97,10 @@ if nickname:
             img('https://cdn.pixabay.com/photo/2016/04/23/20/21/smart-1348189_960_720.jpg')
             if st.button('카풀',use_container_width=True):
                 st.session_state.club = '카풀'
-                st.session_state.place = ['서울','운정','일산','김포']
                 st.session_state.doc_ref = db.collection('static')
                 switch_page('club')
 
     logout = st.button('로그아웃',type='primary')
     if logout:
         st.session_state.clear()
-        st.experimental_rerun()
-        # switch_page('club')
+        switch_page('club')

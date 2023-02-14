@@ -54,7 +54,7 @@ db = firestore.client()
 
 if nickname:
     empty.empty()
-    st.write('## IMI Critical Engineering Club')
+    st.write('# IMI CE Korea Club')
     with expander('dynamic'):
         c = st.columns(3)
         with c[0]:

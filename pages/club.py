@@ -12,8 +12,8 @@ st.set_page_config(
 )
 
 b = st.button('balloons')
-    if b :
-        st.balloons()
+if b :
+    st.balloons()
 
 def disabled_참():
     st.session_state.disabled_참 = True

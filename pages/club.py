@@ -166,7 +166,7 @@ if nickname :
                                 doc_list.remove(nickname)
                                 doc_document['인원수'] -=1
                                 
-                            doc_ref.update(doc)
+#                             doc_ref.update(doc)
 #                             st.experimental_rerun()
                         
                     with st.expander('인원'):

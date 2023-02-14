@@ -43,51 +43,52 @@ max_date = now_date.replace(year=now_date.year+1,month=1,day=1) - timedelta(days
 if nickname :
     if st.session_state.club != '' :
         st.subheader(f"Hi, {nickname}🎈")
-        with st.form("my_form",clear_on_submit=True):
-            club = st.selectbox('club',[st.session_state.club])
-            date = st.date_input('날짜',value=now_date,min_value=now_date,max_value=max_date).strftime('%m-%d')
-            times = st.time_input('시간',value= time(17,30)).strftime('%H:%M')
-            
-            empty = st.empty()
-            place = empty.selectbox('장소',st.session_state.place,help='장소를 직접 입력하려면 장소추가 버튼을 누르세요.')
-            people = st.number_input('정원',value=10,max_value=30,help='최대인원 30명')
-            button_place = st.form_submit_button('장소추가',use_container_width=True)
-            button_place_del = st.form_submit_button('장소삭제',use_container_width=True)
-            if button_place:
-                place = empty.text_input('place',placeholder='장소를 정확하게 입력하세요.',max_chars=30,help='장소추가 버튼을 한번 더 누르세요.')
-                if place != '' and place not in st.session_state.place:
-                    st.session_state.place.append(place)
-                    place = empty.selectbox('place',st.session_state.place,key='place_append')
-                    st.experimental_rerun()
+        with st.expander('모임생성'):
+            with st.form("my_form",clear_on_submit=True):
+                club = st.selectbox('클럽',[st.session_state.club])
+                date = st.date_input('날짜',value=now_date,min_value=now_date,max_value=max_date).strftime('%m-%d')
+                times = st.time_input('시간',value= time(17,30)).strftime('%H:%M')
 
-            if button_place_del:
-                if place not in st.session_state.place:
-                    st.session_state.place.remove(place)
-                    st.experimental_rerun()
+                empty = st.empty()
+                place = empty.selectbox('장소',st.session_state.place,help='장소를 직접 입력하려면 장소추가 버튼을 누르세요.')
+                people = st.number_input('정원',value=10,max_value=30,help='최대인원 30명')
+                button_place = st.form_submit_button('장소추가',use_container_width=True)
+                button_place_del = st.form_submit_button('장소삭제',use_container_width=True)
+                if button_place:
+                    place = empty.text_input('place',placeholder='장소를 정확하게 입력하세요.',max_chars=30,help='장소추가 버튼을 한번 더 누르세요.')
+                    if place != '' and place not in st.session_state.place:
+                        st.session_state.place.append(place)
+                        place = empty.selectbox('place',st.session_state.place,key='place_append')
+                        st.experimental_rerun()
 
-            data = { f"{date}-{place}" : {
-                '시간' : times,
-                '날짜' : date,
-                '장소' : place,
-                '참가목록' : [],
-                '인원수' : 0,
-                '불참가목록' : [],
-                '참여' : {},
-                '불참' : {},            
-                '작성자' : nickname,
-            }}
-            doc_ref = st.session_state.doc_ref.document(club)
+                if button_place_del:
+                    if place not in st.session_state.place:
+                        st.session_state.place.remove(place)
+                        st.experimental_rerun()
 
-            submitted = st.form_submit_button('모임등록',use_container_width=True,type='primary')
-            date_check = data[f"{date}-{place}"].get('날짜') +'-'+ data[f"{date}-{place}"].get('장소')
+                data = { f"{date}-{place}" : {
+                    '시간' : times,
+                    '날짜' : date,
+                    '장소' : place,
+                    '참가목록' : [],
+                    '인원수' : 0,
+                    '불참가목록' : [],
+                    '참여' : {},
+                    '불참' : {},            
+                    '작성자' : nickname,
+                }}
+                doc_ref = st.session_state.doc_ref.document(club)
 
-            if submitted :
-                if date_check not in doc_ref.get().to_dict() :
-                    st.warning('모임이 생성되었습니다.')
-                    doc_ref.update(data)
+                submitted = st.form_submit_button('모임등록',use_container_width=True,type='primary')
+                date_check = data[f"{date}-{place}"].get('날짜') +'-'+ data[f"{date}-{place}"].get('장소')
 
-                else:
-                    st.warning('이미 같은장소에 모임이 있습니다.')
+                if submitted :
+                    if date_check not in doc_ref.get().to_dict() :
+                        st.warning('모임이 생성되었습니다.')
+                        doc_ref.update(data)
+
+                    else:
+                        st.warning('이미 같은장소에 모임이 있습니다.')
 
         st.write('---')
         # rerun = st.button('새로고침')

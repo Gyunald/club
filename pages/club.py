@@ -5,7 +5,6 @@ import requests
 from streamlit_extras.switch_page_button import switch_page
 from firebase_admin import firestore
 
-
 st.set_page_config(
     page_title="😎",
 )
@@ -14,7 +13,6 @@ def disabled_참():
     st.session_state.disabled_참 = True
     st.session_state.disabled_불참 = False
     
-
 def disabled_불참():
     st.session_state.disabled_참 = False
     st.session_state.disabled_불참 = True
@@ -94,7 +92,7 @@ if nickname :
                     else:
                         st.warning('이미 같은장소에 모임이 있습니다.')
 
-        st.write('---')
+#         st.write('---')
         # rerun = st.button('새로고침')
 
         # if rerun:

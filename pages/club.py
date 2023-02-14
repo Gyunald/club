@@ -11,10 +11,6 @@ st.set_page_config(
     # initial_sidebar_state="collapsed",
 )
 
-b = st.button('balloons')
-if b :
-    st.balloons()
-
 def disabled_참():
     st.session_state.disabled_참 = True
     st.session_state.disabled_불참 = False
@@ -155,6 +151,7 @@ if nickname :
                                 doc_list.append(nickname)
                                 doc_document['인원수'] +=1
                                 doc_application[nickname] = doc_time
+                                st.balloons()
                                 if nickname in doc_list_non:
                                     doc_list_non.remove(nickname)
                             doc_ref.update(doc)

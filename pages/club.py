@@ -90,7 +90,7 @@ if nickname :
                     else:
                         st.warning('이미 같은장소에 모임이 있습니다.')
 
-        st.write('---')
+#         st.write('---')
         # rerun = st.button('새로고침')
 
         # if rerun:

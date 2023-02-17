@@ -200,10 +200,10 @@ if st.button('clear'):
     sever_state.clear()
     st.experimental_rerun()
 
-a= st.text_input("Message", key="message_input", on_change=on_message_input)
+st.text_input("Message", key="message_input", on_change=on_message_input)
 
 # if server_state["chat_messages"]:
 #     server_state["text"].insert(0,f'{server_state["chat_messages"][-1]["nickname"]} : {server_state["chat_messages"][-1]["text"]}\n{server_state["chat_messages"][-1]["time"]}')
 
 # st.text_area('Chat','\n'.join(server_state["text"]), height=150)
-st.text_area('Chat',a, height=150)
+st.text_area('Chat',server_state["chat_messages"], height=150)

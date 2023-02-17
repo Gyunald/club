@@ -75,7 +75,7 @@ if nickname:
             server_state["chat_messages"] = []
     
     st.text_input("Message", key="message_input", on_change=on_message_input)
-    st.text_area('Chat','\n'.join(server_state["chat_messages"]),height=100)
+    st.text_area('Chat','\n'.join(server_state["chat_messages"]),height=150)
     
     if st.button('rerun'):
         st.experimental_rerun()

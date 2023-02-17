@@ -7,3 +7,4 @@ streamlit_lottie
 streamlit_extras
 streamlit_authenticator
 firebase_admin
+streamlit_server_state

@@ -21,13 +21,13 @@ def expander(title):
     return st.expander(title, expanded=True)
 
 def on_message_input():   
-    new_message_text = st.session_state["chat_messages"]
+    new_message_text = st.session_state["message_input"]
 
     if not new_message_text:
         return new_message_text
     
-#     st.session_state["chat_messages"] = st.session_state["chat_messages"]
-#     st.session_state["chat_messages"] = ""
+    st.session_state["chat_messages"] = st.session_state["message_input"]
+    st.session_state["message_input"] = ""
 
     new_message_packet = f"{nickname} : {new_message_text}"
 
@@ -77,7 +77,7 @@ if nickname:
             
     st.text_area('Chat','\n'.join(server_state["chat_messages"]),height=150)
 
-    st.text_input("Message", key="chat_messages", on_change=on_message_input)
+    st.text_input("Message", key="message_input", on_change=on_message_input)
     
     if st.button('rerun'):
         st.experimental_rerun()

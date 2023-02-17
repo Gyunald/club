@@ -170,10 +170,10 @@ if not nickname:
 def times():
     t = (datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M:%S')
     return t
-@st.cache_data
-def list():
-    l = []
-    return l
+# @st.cache_data
+# def list():
+#     l = []
+#     return l
 
 def on_message_input():   
     new_message_text = st.session_state["message_input"]
@@ -197,16 +197,18 @@ def on_message_input():
 with server_state_lock["chat_messages"]:
     if "chat_messages" not in server_state:
         server_state["chat_messages"] = []
+
+with server_state_lock["chat_messages"]:
+    if "text" not in server_state:
+        server_state["text] = []
+                     
 e.empty()
-l = list()
 for i in server_state["chat_messages"]:
-    if i in l:
-        continue
-    else:
-        l.insert(0,f"{i['nickname']} : {i['text']}\n{times()}")    
+    if i not in server_state["text]:
+        server_state["text].insert(0,f"{i['nickname']} : {i['text']}\n{times()}")
 
 a= st.text_input("Message", key="message_input", on_change=on_message_input)
-st.text_area('Chat','\n'.join(l), height=150)
+st.text_area('Chat','\n'.join(server_state["text]), height=150)
 
 if st.button('clear'): 
     server_state["chat_messages"] = []

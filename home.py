@@ -167,10 +167,6 @@ nickname = e.text_input("Nick name", key="nickname")
 if not nickname:
     st.stop()
 
-def times():
-    t = (datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M:%S')
-    return t
-
 def on_message_input():   
     new_message_text = st.session_state["message_input"]
     if not new_message_text:
@@ -182,7 +178,7 @@ def on_message_input():
     new_message_packet = {
         "nickname": nickname,
         "text": new_message_text,
-
+        "time": (datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M:%S')
     }
     
     with server_state_lock["chat_messages"]:
@@ -202,11 +198,11 @@ if st.button('clear'):
     server_state["chat_messages"] = []
     server_state["text"] = []
     st.experimental_rerun()
-    
 
-a= st.text_input("Message", key="message_input", on_change=on_message_input)
+st.text_input("Message", key="message_input", on_change=on_message_input)
+
 if server_state["chat_messages"]:
-    server_state["text"].insert(0,f'{server_state["chat_messages"][-1]["nickname"]} : {server_state["chat_messages"][-1]["text"]}\n{(datetime.utcnow()+timedelta(hours=9)).strftime("%H:%M:%S")}')
+    server_state["text"].insert(0,f'{server_state["chat_messages"][-1]["nickname"]} : {server_state["chat_messages"][-1]["text"]}\n{server_state["chat_messages"][-1]["time"]}')
 
 st.text_area('Chat','\n'.join(server_state["text"]), height=150)
 

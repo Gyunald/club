@@ -34,6 +34,10 @@ def on_message_input():
     with server_state_lock["chat_messages"]:
         server_state["chat_messages"].insert(0,new_message_packet)
         
+    with server_state_lock["chat_messages"]:
+        if "chat_messages" not in server_state:
+            server_state["chat_messages"] = []
+            
 if not firebase_admin._apps:
     cred = credentials.Certificate({
     "type": st.secrets.type,
@@ -70,10 +74,6 @@ db = firestore.client()
 if nickname:
     empty.empty()
     st.write('# IMI CE Korea Club')
-
-    with server_state_lock["chat_messages"]:
-        if "chat_messages" not in server_state:
-            server_state["chat_messages"] = []
 
     st.text_area('Chat','\n'.join(server_state["chat_messages"]),height=150)
 

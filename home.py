@@ -79,10 +79,10 @@ if nickname:
     
 #     if st.button('rerun'):
 #         st.experimental_rerun()
-#     if st.button('clear'): 
+    if st.button('clear'): 
 #         server_state["chat_messages"] = []
 #         st.experimental_rerun()
-
+        server_state.clear()
     with expander('dynamic'):
         c = st.columns(3)
         with c[0]:

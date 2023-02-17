@@ -181,12 +181,14 @@ def on_message_input():
 
     }
     
-    #with server_state_lock["chat_messages"]:
-     #   server_state["chat_messages"] = server_state["chat_messages"] + [
-           # new_message_packet]
-
     with server_state_lock["chat_messages"]:
-        server_state["chat_messages"].insert(0,new_message_packet)
+        server_state["chat_messages"] = server_state["chat_messages"] + [
+            new_message_packet
+        ]
+
+
+#     with server_state_lock["chat_messages"]:
+#         server_state["chat_messages"].insert(0,new_message_packet)
 
 with server_state_lock["chat_messages"]:
     if "chat_messages" not in server_state:

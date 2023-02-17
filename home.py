@@ -208,7 +208,7 @@ if st.button('clear'):
     server_state["chat_messages"] = []
     server_state["text"] = []
     st.experimental_rerun()
-
+server_state["chat_messages"]
 for i in server_state["chat_messages"][-1]:
     server_state["text"].insert(0,f"{i['nickname']} : {i['text']}\n{times()}")
 

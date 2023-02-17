@@ -198,7 +198,7 @@ e.empty()
 
 a= st.text_input("Message", key="message_input", on_change=on_message_input)
 # st.text_area('Chat','\n'.join(l))
-st.text_area('Chat',a)
+st.text_area('Chat',server_state["chat_messages"])
 if st.button('rerun'):
     st.experimental_rerun()
 if st.button('clear'): 

@@ -208,7 +208,7 @@ if st.button('clear'):
 
 a= st.text_input("Message", key="message_input", on_change=on_message_input)
 if server_state["chat_messages"]:
-    server_state["text"].insert(0,f'{server_state["chat_messages"][-1]["nickname"]} : {server_state["chat_messages"][-1]["text"]}\n{(datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M:%S')}')
+    server_state["text"].insert(0,f'{server_state["chat_messages"][-1]["nickname"]} : {server_state["chat_messages"][-1]["text"]}\n{(datetime.utcnow()+timedelta(hours=9)).strftime("%H:%M:%S")}')
 
 st.text_area('Chat','\n'.join(server_state["text"]), height=150)
 

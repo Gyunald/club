@@ -208,9 +208,11 @@ if st.button('clear'):
     server_state["chat_messages"] = []
     server_state["text"] = []
     st.experimental_rerun()
+    
 server_state["chat_messages"]
-for i in server_state["chat_messages"][-1]:
-    server_state["text"].insert(0,f"{i['nickname']} : {i['text']}\n{times()}")
+
+# for i in server_state["chat_messages"][-1]:
+server_state["text"].insert(0,f"{server_state["chat_messages"][-1]['nickname']} : {server_state["chat_messages"][-1]['text']}\n{times()}")
 
 a= st.text_input("Message", key="message_input", on_change=on_message_input)
 st.text_area('Chat','\n'.join(server_state["text"]), height=150)

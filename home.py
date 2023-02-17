@@ -196,12 +196,12 @@ def on_message_input():
 
 with server_state_lock["chat_messages"]:
     if "chat_messages" not in server_state:
-        server_state["chat_messages"] = []
+        server_state["chat_messages"] = ['연결됨']
 
 with server_state_lock["chat_messages"]:
     if "text" not in server_state:
         server_state["text"] = []
-                     
+
 e.empty()
 for i in server_state["chat_messages"][-1]:
     server_state["text"].insert(0,f"{i['nickname']} : {i['text']}\n{times()}")

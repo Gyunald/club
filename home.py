@@ -29,10 +29,10 @@ def on_message_input():
     st.session_state["chat_messages"] = st.session_state["chat_messages"]
     st.session_state["chat_messages"] = ""
 
-    new_message_packet = f"{nickname} : {new_message_text}\n"
+    new_message_packet = f"{nickname} : {new_message_text}"
 
     with server_state_lock["chat_messages"]:
-        server_state["chat_messages"] += new_message_packet
+        server_state["chat_messages"].insert(0,new_message_packet)
         
 if not firebase_admin._apps:
     cred = credentials.Certificate({
@@ -73,13 +73,15 @@ if nickname:
 
     with server_state_lock["chat_messages"]:
         if "chat_messages" not in server_state:
-            server_state["chat_messages"] = ''
+            server_state["chat_messages"] = []
+
+    st.text_area('Chat','\n'.join(server_state["chat_messages"]),height=150,disabled=True)
 
     a = st.text_input("Message", key="chat_messages", on_change=on_message_input)
-    st.text_area('M',server_state["chat_messages"])
 
     if st.button('clear'): 
-        server_state.clear()
+        server_state["chat_messages"] = []
+        st.experimental_rerun()
 
     with expander('dynamic'):
         c = st.columns(3)

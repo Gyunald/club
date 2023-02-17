@@ -3,6 +3,7 @@ import streamlit as st
 import datetime
 import requests
 from streamlit_extras.switch_page_button import switch_page
+from streamlit_server_state import server_state, server_state_lock
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
@@ -19,19 +20,22 @@ def img(img):
 def expander(title):
     return st.expander(title, expanded=True)
 
+def on_message_input():   
+    new_message_text = st.session_state["chat_messages"]
+
+    if not new_message_text:
+        return new_message_text
+    
+    st.session_state["chat_messages"] = st.session_state["chat_messages"]
+    st.session_state["chat_messages"] = ""
+
+    new_message_packet = f"{nickname} : {new_message_text}\n"
+
+    with server_state_lock["chat_messages"]:
+        server_state["chat_messages"] += new_message_packet
+
 if not firebase_admin._apps:
-    cred = credentials.Certificate({
-    "type": st.secrets.type,
-    "project_id": st.secrets.project_id,
-    "private_key_id": st.secrets.private_key_id,
-    "private_key": st.secrets.private_key,
-    "client_email": st.secrets.client_email,
-    "client_id": st.secrets.client_id,
-    "auth_uri": st.secrets.auth_uri,
-    "token_uri": st.secrets.token_uri,
-    "auth_provider_x509_cert_url": st.secrets.auth_provider_x509_cert_url,
-    "client_x509_cert_url": st.secrets.client_x509_cert_url
-    })
+    cred = credentials.Certificate('club-ecd9c-firebase-adminsdk-4xmc7-a36179a49c.json')
     app = firebase_admin.initialize_app(cred)
 
 empty = st.empty()
@@ -55,6 +59,17 @@ db = firestore.client()
 if nickname:
     empty.empty()
     st.write('# IMI CE Korea Club')
+
+    with server_state_lock["chat_messages"]:
+        if "chat_messages" not in server_state:
+            server_state["chat_messages"] = ''
+
+    a = st.text_input("Message", key="chat_messages", on_change=on_message_input)
+    st.text_area('M',server_state["chat_messages"])
+
+    if st.button('clear'): 
+        server_state.clear()
+
     with expander('dynamic'):
         c = st.columns(3)
         with c[0]:

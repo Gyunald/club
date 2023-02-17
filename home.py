@@ -166,10 +166,14 @@ nickname = e.text_input("Nick name", key="nickname")
 # times = (datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M')
 if not nickname:
     st.stop()
-@st.cache_data
+
 def times():
     t = (datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M:%S')
     return t
+@st.cache_data
+def list():
+    l = []
+    return l
 
 def on_message_input():   
     new_message_text = st.session_state["message_input"]
@@ -194,9 +198,12 @@ with server_state_lock["chat_messages"]:
     if "chat_messages" not in server_state:
         server_state["chat_messages"] = []
 e.empty()
-l = []
+l = list()
 for i in server_state["chat_messages"]:
-    l.insert(0,f"{i['nickname']} : {i['text']}\n{times()}")    
+    if i in l:
+        continue
+    else:
+        l.insert(0,f"{i['nickname']} : {i['text']}\n{times()}")    
 
 a= st.text_input("Message", key="message_input", on_change=on_message_input)
 st.text_area('Chat','\n'.join(l), height=150)

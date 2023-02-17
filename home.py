@@ -183,7 +183,7 @@ def on_message_input():
     
     with server_state_lock["chat_messages"]:
         server_state["chat_messages"] = server_state["chat_messages"] + [
-            f"{new_message_packet['nickname']} : {new_message_packet['text'] \n {new_message_packet['time']}"
+            f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
         ]
 
 with server_state_lock["chat_messages"]:

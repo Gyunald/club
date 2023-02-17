@@ -163,17 +163,13 @@ from streamlit_server_state import server_state, server_state_lock
 
 e =st.empty()
 nickname = e.text_input("Nick name", key="nickname")
-# times = (datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M')
+
 if not nickname:
     st.stop()
 
 def times():
     t = (datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M:%S')
     return t
-# @st.cache_data
-# def list():
-#     l = []
-#     return l
 
 def on_message_input():   
     new_message_text = st.session_state["message_input"]
@@ -209,13 +205,10 @@ if st.button('clear'):
     server_state["text"] = []
     st.experimental_rerun()
     
-server_state["chat_messages"]
-server_state["text"]
-# for i in server_state["chat_messages"][-1]:
 
 a= st.text_input("Message", key="message_input", on_change=on_message_input)
 if server_state["chat_messages"]:
-    server_state["text"].insert(0,f'{server_state["chat_messages"][-1]["nickname"]} : {server_state["chat_messages"][-1]["text"]}\n{times()}')
+    server_state["text"].insert(0,f'{server_state["chat_messages"][-1]["nickname"]} : {server_state["chat_messages"][-1]["text"]}\n{(datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M:%S')}')
 
 st.text_area('Chat','\n'.join(server_state["text"]), height=150)
 

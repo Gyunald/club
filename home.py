@@ -33,9 +33,20 @@ def on_message_input():
 
     with server_state_lock["chat_messages"]:
         server_state["chat_messages"] += new_message_packet
-
+        
 if not firebase_admin._apps:
-    cred = credentials.Certificate('club-ecd9c-firebase-adminsdk-4xmc7-a36179a49c.json')
+    cred = credentials.Certificate({
+    "type": st.secrets.type,
+    "project_id": st.secrets.project_id,
+    "private_key_id": st.secrets.private_key_id,
+    "private_key": st.secrets.private_key,
+    "client_email": st.secrets.client_email,
+    "client_id": st.secrets.client_id,
+    "auth_uri": st.secrets.auth_uri,
+    "token_uri": st.secrets.token_uri,
+    "auth_provider_x509_cert_url": st.secrets.auth_provider_x509_cert_url,
+    "client_x509_cert_url": st.secrets.client_x509_cert_url
+    })
     app = firebase_admin.initialize_app(cred)
 
 empty = st.empty()

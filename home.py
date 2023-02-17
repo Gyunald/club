@@ -168,7 +168,7 @@ if not nickname:
     st.stop()
 @st.cache_data
 def times():
-    t = (datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M')
+    t = (datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M:%S')
     return t
 
 def on_message_input():   

@@ -204,3 +204,4 @@ if st.button('rerun'):
 if st.button('clear'): 
     server_state["chat_messages"] = []
     st.experimental_rerun()
+st.write(server_state["chat_messages"])

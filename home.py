@@ -192,12 +192,11 @@ with server_state_lock["chat_messages"]:
 e.empty()
 l = []
 for i in server_state["chat_messages"]:
-    l.append(f"{i['nickname']} : {i['text']}")
+    l.insert(0,f"{i['nickname']} : {i['text']}")    
 
 a= st.text_input("Message", key="message_input", on_change=on_message_input)
 st.text_area('Chat','\n'.join(l))
 
-st.text_area('Chat',server_state["chat_messages"])
 if st.button('rerun'):
     st.experimental_rerun()
 if st.button('clear'): 

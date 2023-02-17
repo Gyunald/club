@@ -181,23 +181,24 @@ def on_message_input():
 
     }
     
-    with server_state_lock["chat_messages"]:
-        server_state["chat_messages"] = server_state["chat_messages"] + [
+    #with server_state_lock["chat_messages"]:
+     #   server_state["chat_messages"] = server_state["chat_messages"] + [
             new_message_packet
         ]
-#     with server_state_lock["chat_messages"]:
-#         server_state["chat_messages"].insert(0,new_message_packet)
+     with server_state_lock["chat_messages"]:
+         server_state["chat_messages"].insert(0,new_message_packet)
 
 with server_state_lock["chat_messages"]:
     if "chat_messages" not in server_state:
         server_state["chat_messages"] = []
 e.empty()
-# l = []
+l = []
 # for i in server_state["chat_messages"]:
 #     l.append(f"{i['nickname']} : {i['text']}")
 
 a= st.text_input("Message", key="message_input", on_change=on_message_input)
 # st.text_area('Chat','\n'.join(l))
+
 st.text_area('Chat',server_state["chat_messages"])
 if st.button('rerun'):
     st.experimental_rerun()

@@ -166,7 +166,7 @@ nickname = e.text_input("Nick name", key="nickname")
 # times = (datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M')
 if not nickname:
     st.stop()
-@st.cache.data()
+@st.cache_data
 def times():
     t = (datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M')
     return t

@@ -195,11 +195,9 @@ for i in server_state["chat_messages"]:
     l.insert(0,f"{i['nickname']} : {i['text']}")    
 
 a= st.text_input("Message", key="message_input", on_change=on_message_input)
-st.text_area('Chat','\n'.join(l))
+st.text_area('Chat','\n'.join(l), hight=150)
 
-if st.button('rerun'):
-    st.experimental_rerun()
 if st.button('clear'): 
     server_state["chat_messages"] = []
     st.experimental_rerun()
-st.write(server_state["chat_messages"])
+

@@ -210,7 +210,7 @@ if st.button('clear'):
     st.experimental_rerun()
     
 server_state["chat_messages"]
-
+server_state["text"]
 # for i in server_state["chat_messages"][-1]:
 
 a= st.text_input("Message", key="message_input", on_change=on_message_input)

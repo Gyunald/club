@@ -189,8 +189,6 @@ def on_message_input():
 with server_state_lock["chat_messages"]:
     if "chat_messages" not in server_state:
         server_state["chat_messages"] = []
-#     if "text" not in server_state:
-#         server_state["text"] = []
 
 e.empty()
 
@@ -200,9 +198,4 @@ if st.button('clear'):
     st.experimental_rerun()
 
 st.text_input("Message", key="message_input", on_change=on_message_input)
-
-server_state["chat_messages"]
-# server_state["chat_messages"].insert(0,f'{server_state["chat_messages"][-1]["nickname"]} : {server_state["chat_messages"][-1]["text"]}\n{server_state["chat_messages"][-1]["time"]}')
-
 st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)
-# st.text_area('Chat',server_state["chat_messages"], height=150)

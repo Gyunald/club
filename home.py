@@ -212,5 +212,6 @@ st.text_area('Chat','\n'.join(server_state["text"]), height=150)
 
 if st.button('clear'): 
     server_state["chat_messages"] = []
+    server_state["text"] = []
     st.experimental_rerun()
 

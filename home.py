@@ -203,9 +203,8 @@ with server_state_lock["chat_messages"]:
         server_state["text"] = []
                      
 e.empty()
-for i in server_state["chat_messages"]:
-    if i not in server_state["text"]:
-        server_state["text"].insert(0,f"{i['nickname']} : {i['text']}\n{times()}")
+for i in server_state["chat_messages"][-1]:
+    server_state["text"].insert(0,f"{i['nickname']} : {i['text']}\n{times()}")
 
 a= st.text_input("Message", key="message_input", on_change=on_message_input)
 st.text_area('Chat','\n'.join(server_state["text"]), height=150)

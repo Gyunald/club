@@ -75,7 +75,7 @@ if nickname:
         if "chat_messages" not in server_state:
             server_state["chat_messages"] = []
 
-    st.text_area('Chat','\n'.join(server_state["chat_messages"]),height=150,disabled=True)
+    st.text_area('Chat','\n'.join(server_state["chat_messages"]),height=150)
 
     a = st.text_input("Message", key="chat_messages", on_change=on_message_input)
 

@@ -194,9 +194,9 @@ with server_state_lock["chat_messages"]:
     if "chat_messages" not in server_state:
         server_state["chat_messages"] = []
 
-with server_state_lock["chat_messages"]:
-    if "text" not in server_state:
-        server_state["text"] = []
+server_state_lock["chat_messages"]:
+if "text" not in server_state:
+    server_state["text"] = []
 
 e.empty()
 

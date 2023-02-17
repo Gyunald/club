@@ -20,19 +20,19 @@ def img(img):
 def expander(title):
     return st.expander(title, expanded=True)
 
-def on_message_input():   
-    new_message_text = st.session_state["message_input"]
+# def on_message_input():   
+#     new_message_text = st.session_state["message_input"]
 
-    if not new_message_text:
-        return new_message_text
+#     if not new_message_text:
+#         return new_message_text
     
-    st.session_state["chat_messages"] = st.session_state["message_input"]
-    st.session_state["message_input"] = ""
+#     st.session_state["chat_messages"] = st.session_state["message_input"]
+#     st.session_state["message_input"] = ""
 
-    new_message_packet = f"{nickname} : {new_message_text}"
+#     new_message_packet = f"{nickname} : {new_message_text}"
 
-    with server_state_lock["chat_messages"]:
-        server_state["chat_messages"].insert(0,new_message_packet)
+#     with server_state_lock["chat_messages"]:
+#         server_state["chat_messages"].insert(0,new_message_packet)
 
 if not firebase_admin._apps:
     cred = credentials.Certificate({
@@ -70,18 +70,18 @@ db = firestore.client()
 if nickname:
     empty.empty()
     st.write('# IMI CE Korea Club')
-    with server_state_lock["chat_messages"]:
-        if "chat_messages" not in server_state:
-            server_state["chat_messages"] = []
+#     with server_state_lock["chat_messages"]:
+#         if "chat_messages" not in server_state:
+#             server_state["chat_messages"] = []
     
-    st.text_input("Message", key="message_input", on_change=on_message_input)
-    st.text_area('Chat','\n'.join(server_state["chat_messages"]),height=150)
+#     st.text_input("Message", key="message_input", on_change=on_message_input)
+#     st.text_area('Chat','\n'.join(server_state["chat_messages"]),height=150)
     
-    if st.button('rerun'):
-        st.experimental_rerun()
-    if st.button('clear'): 
-        server_state["chat_messages"] = []
-        st.experimental_rerun()
+#     if st.button('rerun'):
+#         st.experimental_rerun()
+#     if st.button('clear'): 
+#         server_state["chat_messages"] = []
+#         st.experimental_rerun()
 
     with expander('dynamic'):
         c = st.columns(3)

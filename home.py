@@ -185,7 +185,7 @@ def on_message_input():
         server_state["chat_messages"] = server_state["chat_messages"] + [
             f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
         ]
-#         server_state["user"].clear()
+        server_state["user"].clear()
         server_state["user"] = server_state["user"] + [st.session_state["user"]]
 #         st.session_state["user"] = st.session_state["user"] + [nickname]
 
@@ -205,7 +205,7 @@ if st.button('clear'):
     server_state["chat_messages"] = []
     server_state["text"] = []
     st.experimental_rerun()
-user = '\n'.join(set(server_state["user"]))
+user = st.session_state["user"]
 # user = '\n'.join(set(st.session_state["user"]))
 st.info(user)
 st.text_input("Message", key="message_input", on_change=on_message_input)

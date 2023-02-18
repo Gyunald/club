@@ -168,7 +168,6 @@ if not nickname:
     st.stop()
 
 def on_message_input():
-    global new_message_packet
     new_message_text = st.session_state["message_input"]
     if not new_message_text:
         return 
@@ -199,6 +198,6 @@ if st.button('clear'):
     server_state["text"] = []
     st.experimental_rerun()
 
-st.info(new_message_packet['nickname'])
+st.info('\n'.join(server_state["chat_messages"]).split()[0])
 st.text_input("Message", key="message_input", on_change=on_message_input)
 st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)

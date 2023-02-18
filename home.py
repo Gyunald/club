@@ -169,6 +169,7 @@ if not nickname:
     st.stop()
 def user():
     return server_state["user"]
+
 def on_message_input():
     new_message_text = st.session_state["message_input"]
     if not new_message_text:
@@ -206,6 +207,8 @@ e.empty()
 if st.button('clear'): 
     server_state["chat_messages"] = []
     server_state["text"] = []
+    server_state["user"] = []
+    
     st.experimental_rerun()
 user = '\n'.join(user())
 # user = '\n'.join(set(st.session_state["user"]))

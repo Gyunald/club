@@ -186,7 +186,7 @@ def on_message_input():
             f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
         ]
         server_state["user"].clear()
-        server_state["user"].append([st.session_state["user"]])
+        server_state["user"].append(st.session_state["user"])
 #         st.session_state["user"] = st.session_state["user"] + [nickname]
 
 

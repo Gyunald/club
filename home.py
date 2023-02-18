@@ -180,7 +180,7 @@ def on_message_input():
         "text": new_message_text,
         "time": (datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M:%S')
     }
-    st.info(new_message_packet['nickname'])
+    
     with server_state_lock["chat_messages"]:
         server_state["chat_messages"] = server_state["chat_messages"] + [
             f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
@@ -197,6 +197,6 @@ if st.button('clear'):
     server_state["chat_messages"] = []
     server_state["text"] = []
     st.experimental_rerun()
-
+st.info(nickname)
 st.text_input("Message", key="message_input", on_change=on_message_input)
 st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)

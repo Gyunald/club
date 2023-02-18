@@ -167,7 +167,8 @@ nickname = e.text_input("Nick name", key="nickname")
 if not nickname:
     
     st.stop()
-
+def user():
+    return server_state["user"]
 def on_message_input():
     new_message_text = st.session_state["message_input"]
     if not new_message_text:
@@ -195,18 +196,18 @@ with server_state_lock["chat_messages"]:
     if "chat_messages" not in server_state:
         server_state["chat_messages"] = []
     if "user" not in server_state:
-        server_state["user"] = [nickname]
+        server_state["user"] = []
 
 if "user" not in st.session_state:
     st.session_state["user"] = server_state["user"]
-    
 e.empty()
+
 
 if st.button('clear'): 
     server_state["chat_messages"] = []
     server_state["text"] = []
     st.experimental_rerun()
-user = '\n'.join(server_state["user"])
+user = '\n'.join(user())
 # user = '\n'.join(set(st.session_state["user"]))
 st.info(user)
 st.text_input("Message", key="message_input", on_change=on_message_input)

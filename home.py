@@ -200,6 +200,6 @@ if st.button('clear'):
     server_state["text"] = []
     st.experimental_rerun()
     
-st.info(server_state["user"])
 st.text_input("Message", key="message_input", on_change=on_message_input)
+st.info(server_state["user"])
 st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)

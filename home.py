@@ -188,7 +188,7 @@ def on_message_input():
         ]
 #         server_state["user"].clear()
 #         st.session_state["user"].clear()
-        if not in server_state["user"]:
+        if nickname not in server_state["user"]:
             server_state["user"].append(nickname)
 
 with server_state_lock["chat_messages"]:

@@ -185,7 +185,7 @@ def on_message_input():
         server_state["chat_messages"] = server_state["chat_messages"] + [
             f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
         ]
-        server_state["user"].clear()
+#         server_state["user"].clear()
         server_state["user"] = server_state["user"] + [st.session_state["user"]]
 #         st.session_state["user"] = st.session_state["user"] + [nickname]
 

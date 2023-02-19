@@ -172,8 +172,8 @@ def on_message_input():
     if not new_message_text :
         return 
     
-    if "chat_messages" not in st.session_state:
-        st.session_state["chat_messages"] = ""
+#     if "chat_messages" not in st.session_state:
+#         st.session_state["chat_messages"] = ""
 
 #     st.session_state["chat_messages"] = st.session_state["message_input"]
     st.session_state["message_input"] = ""
@@ -216,3 +216,4 @@ if server_state["user"]:
     st.info('\n'.join(server_state["user"]))
 st.text_input("Message", key="message_input", on_change=on_message_input)
 st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)
+st.write(st.session_state["message_input"])

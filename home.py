@@ -170,12 +170,6 @@ def on_message_input():
     new_message_text = st.session_state["message_input"]
     if not new_message_text:
         return 
-    
-    if "chat_messages" not in st.session_state:
-        st.session_state["chat_messages"] = ""
-        
-    st.session_state["chat_messages"] = st.session_state["message_input"]
-    st.session_state["message_input"] = ""
 
     new_message_packet = {
         "nickname": nickname,
@@ -188,7 +182,12 @@ def on_message_input():
             f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
         ]
         
-        
+    if "chat_messages" not in st.session_state:
+        st.session_state["chat_messages"] = ""
+
+    st.session_state["chat_messages"] = st.session_state["message_input"]
+    st.session_state["message_input"] = ""
+    
 st.write(f"### HELLO, {nickname}🎈")
 with server_state_lock["chat_messages"]:
     if "chat_messages" not in server_state:

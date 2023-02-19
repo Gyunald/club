@@ -191,8 +191,8 @@ with server_state_lock["chat_messages"]:
     if "chat_messages" not in server_state:
         server_state["chat_messages"] = []
         
-    if "user" not in server_state:        
-        server_state["user"] = [nickname]
+    if "user" not in server_state:
+        server_state["user"] = []
         
     else:
         if nickname not in server_state["user"]:

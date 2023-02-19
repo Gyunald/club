@@ -178,10 +178,11 @@ def on_message_input():
     }
 
     with server_state_lock["chat_messages"]:
-        server_state["chat_messages"] = server_state["chat_messages"] + [
-            f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
-        ]
-        
+        if new_message_text != '' :
+            server_state["chat_messages"] = server_state["chat_messages"] + [
+                f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
+            ]
+
 if "chat_messages" not in st.session_state:
     st.session_state["chat_messages"] = ""
 

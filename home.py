@@ -167,8 +167,8 @@ if not nickname:
     st.stop()
 
 def on_message_input():
-    new_message_text = st.session_state["message_input"]
-    st.write(new_message_text)
+    new_message_text = st.server_state["message_input"]
+    
     if not new_message_text :
         return 
     

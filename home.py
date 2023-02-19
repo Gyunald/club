@@ -185,6 +185,7 @@ def on_message_input():
     }
     
     with server_state_lock["chat_messages"]:
+        #if (datetime.utcnow()+timedelta(hours=9)).minute 
         server_state["chat_messages"] = server_state["chat_messages"] + [
             f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
         ]
@@ -204,6 +205,7 @@ e.empty()
 if st.button('clear'): 
     server_state["chat_messages"] = []
     st.experimental_rerun()
+    
 #if st.button('user_clear'): 
 #    server_state["user"] = [nickname]
 #    st.experimental_rerun()
@@ -212,3 +214,4 @@ user = '\n'.join(user())
 st.info(user)
 st.text_input("Message", key="message_input", on_change=on_message_input)
 st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)
+server_state["chat_messages"]

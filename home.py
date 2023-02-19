@@ -212,8 +212,8 @@ if st.button('user_clear'):
    server_state["user"] = [nickname]
    st.experimental_rerun()
     
-if server_state["user"]:
-    st.info('\n'.join(server_state["user"]))
+# if server_state["user"]:
+st.info('\n'.join(server_state["user"]))
 st.text_input("Message", key="message_input", on_change=on_message_input)
 st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)
 st.write(st.session_state["message_input"])

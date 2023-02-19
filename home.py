@@ -160,9 +160,6 @@ st.write("HELLO WORLD")
 import streamlit as st
 from datetime import datetime,timedelta
 from streamlit_server_state import server_state, server_state_lock
-
-e =st.empty()
-nickname = e.text_input("Nick name", key="nickname")
     
 def user():
     return server_state["user"]
@@ -184,7 +181,9 @@ def on_message_input():
     with server_state_lock["chat_messages"]:
         server_state["chat_messages"] = server_state["chat_messages"] + [
             f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
-
+            
+e =st.empty()
+nickname = e.text_input("Nick name", key="nickname")
 
 if nickname:
     with server_state_lock["chat_messages"]:

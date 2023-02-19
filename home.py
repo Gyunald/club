@@ -168,7 +168,7 @@ if not nickname:
 
 def on_message_input():
     new_message_text = st.session_state["message_input"]
-
+    st.write(new_message_text)
     if not new_message_text :
         return 
     
@@ -215,6 +215,5 @@ if st.button('user_clear'):
 st.info('\n'.join(server_state["user"]))
 st.text_input("Message", key="message_input", on_change=on_message_input)
 st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)
-st.write('1')
-st.write(st.session_state.message_input)
+
 st.write(st.session_state)

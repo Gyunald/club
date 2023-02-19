@@ -168,7 +168,7 @@ if not nickname:
 
 def on_message_input():
     if st.session_state["message_input"] == "":
-        break
+        pass
 
     if not new_message_text:
         return 

@@ -198,7 +198,7 @@ with server_state_lock["chat_messages"]:
     if "user" not in server_state:
         server_state["user"] = [nickname]
     else:
-        sever_state["user"].append(nickname)
+        server_state["user"].append(nickname)
 
 e.empty()
 

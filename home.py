@@ -190,14 +190,13 @@ st.write(f"### HELLO, {nickname}🎈")
 with server_state_lock["chat_messages"]:
     if "chat_messages" not in server_state:
         server_state["chat_messages"] = []
-        
-with server_state_lock["chat_messages"]:       
+         
     if "user" not in server_state:
         server_state["user"] = [nickname]
         
-    else:
-        if nickname not in server_state["user"]:
-            server_state["user"].append(nickname)
+#     else:
+#         if nickname not in server_state["user"]:
+#             server_state["user"].append(nickname)
 
     
 e.empty()
@@ -206,7 +205,7 @@ if st.button('clear'):
     server_state["chat_messages"] = []
     st.experimental_rerun()
     
-# st.info('\n'.join(server_state["user"]))
+st.info('\n'.join(server_state["user"]))
 st.text_input("Message", key="message_input", on_change=on_message_input)
 st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)
 

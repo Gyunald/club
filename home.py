@@ -195,7 +195,7 @@ def on_message_input():
 with server_state_lock["chat_messages"]:
     if "chat_messages" not in server_state:
         server_state["chat_messages"] = []
-    if "user" not in server_state:
+    if "user" not in server_state["user"]:
         server_state["user"] = [nickname]
 
 e.empty()

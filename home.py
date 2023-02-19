@@ -204,9 +204,9 @@ e.empty()
 if st.button('clear'): 
     server_state["chat_messages"] = []
     st.experimental_rerun()
-if st.button('user_clear'): 
-    server_state["user"] = [nickname]
-    st.experimental_rerun()
+#if st.button('user_clear'): 
+#    server_state["user"] = [nickname]
+#    st.experimental_rerun()
     
 user = '\n'.join(user())
 st.info(user)

@@ -178,7 +178,7 @@ def on_message_input():
     }
 
     with server_state_lock["chat_messages"]:
-        if new_message_text != '' :
+        if st.session_state["message_input"] != '' :
             server_state["chat_messages"] = server_state["chat_messages"] + [
                 f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
             ]

@@ -167,12 +167,13 @@ if not nickname:
     st.stop()
 
 def on_message_input():
-    if st.session_state["message_input"] != "":
-        pass
-    new_message_text = st.session_state["message_input"]
+    if st.session_state["message_input"] == "":
+        break
+
     if not new_message_text:
         return 
-
+    new_message_text = st.session_state["message_input"]
+    
     new_message_packet = {
         "nickname": nickname,
         "text": new_message_text,

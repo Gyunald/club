@@ -243,3 +243,6 @@ with server_state_lock["chat_messages"]:
 st.text_input("Message", key="message_input", on_change=on_message_input)
 
 st.write(server_state["chat_messages"])
+if st.button('clear'): 
+    server_state["chat_messages"] = []
+    st.experimental_rerun()

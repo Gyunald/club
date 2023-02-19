@@ -194,21 +194,21 @@ with server_state_lock["chat_messages"]:
 
 e.empty()
 
-if "user" not in server_state:
-    server_state["user"] = [nickname]
+# if "user" not in server_state:
+#     server_state["user"] = [nickname]
 
-else:
-    if nickname not in server_state["user"]:
-        server_state["user"].append(nickname)
+# else:
+#     if nickname not in server_state["user"]:
+#         server_state["user"].append(nickname)
 
 if st.button('clear'): 
     server_state["chat_messages"] = []
     st.experimental_rerun()
 if st.button('user_clear'): 
    server_state["user"] = [nickname]
-   st.experimental_rerun()
-if server_state["user"]:
-    st.info('\n'.join(server_state["user"]))
+#    st.experimental_rerun()
+# if server_state["user"]:
+#     st.info('\n'.join(server_state["user"]))
 st.text_input("Message", key="message_input", on_change=on_message_input)
 st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)
 

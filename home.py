@@ -167,7 +167,8 @@ if not nickname:
     st.stop()
 
 def on_message_input():
-    new_message_text = st.session_state["message_input"]
+    if st.session_state["message_input"] != "":
+        new_message_text = st.session_state["message_input"]
     if not new_message_text:
         return 
 
@@ -178,7 +179,6 @@ def on_message_input():
     }
 
     with server_state_lock["chat_messages"]:
-        if st.session_state["message_input"] != '' :
             server_state["chat_messages"] = server_state["chat_messages"] + [
                 f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
             ]

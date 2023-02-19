@@ -169,7 +169,7 @@ if not nickname:
 def on_message_input():
     new_message_text = st.session_state["message_input"]
 
-    if not new_message_text:
+    if new_message_text == '':
         return 
     
     if "chat_messages" not in st.session_state:

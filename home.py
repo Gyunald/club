@@ -185,14 +185,15 @@ def on_message_input():
     }
     
     with server_state_lock["chat_messages"]:
-        if (datetime.utcnow()+timedelta(hours=9)).minute != server_state["chat_messages"][-1].split(' ')[4].split(':')[1]:
-            server_state["chat_messages"] = server_state["chat_messages"] + [
-            f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
-        ]
-        else:
-            server_state["chat_messages"] = server_state["chat_messages"] + [
-            f"{new_message_packet['nickname']} : {new_message_packet['text']}"
-        ]
+        if server_state["chat_messages"]:
+            if (datetime.utcnow()+timedelta(hours=9)).minute != server_state["chat_messages"][-1].split(' ')[4].split(':')[1]:
+                server_state["chat_messages"] = server_state["chat_messages"] + [
+                f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
+            ]
+            else:
+                server_state["chat_messages"] = server_state["chat_messages"] + [
+                f"{new_message_packet['nickname']} : {new_message_packet['text']}"
+            ]
         
 
 

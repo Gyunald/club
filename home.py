@@ -185,6 +185,8 @@ def on_message_input():
             f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
         ]
         
+    server_state["user"] = [nickname]
+        
 st.write(f"### HELLO, {nickname}🎈")
 with server_state_lock["chat_messages"]:
     if "chat_messages" not in server_state:
@@ -193,7 +195,6 @@ with server_state_lock["chat_messages"]:
         server_state["user"] = [nickname]
         
     else:
-#         server_state["user"] = [nickname]
         if nickname not in server_state["user"]:
             server_state["user"].append(nickname)
 

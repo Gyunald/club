@@ -156,95 +156,61 @@ st.set_page_config(
 #         st.session_state.clear()
 #         switch_page('club')
 
-# import streamlit as st
-# from datetime import datetime,timedelta
-# from streamlit_server_state import server_state, server_state_lock
- 
-# e =st.empty()
-# nickname = e.text_input("Nick name", key="nickname")
-
-# if not nickname:    
-#     st.stop()
-
-# def on_message_input():
-#     new_message_text = st.session_state["message_input"]
-#     if not new_message_text:
-#         return 
-
-#     st.session_state["chat_messages"] = st.session_state["message_input"]
-#     st.session_state["message_input"] = ""
-
-#     new_message_packet = {
-#         "nickname": nickname,
-#         "text": new_message_text,
-#         "time": (datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M:%S')
-#     }
-
-#     with server_state_lock["chat_messages"]:
-#         server_state["chat_messages"] = server_state["chat_messages"] + [
-#             f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
-#         ]
-        
-        
-# st.write(f"### HELLO, {nickname}🎈")
-# with server_state_lock["chat_messages"]:
-#     if "chat_messages" not in server_state:
-#         server_state["chat_messages"] = []
-
-
-# e.empty()
-
-# if "user" not in server_state:
-#     server_state["user"] = [nickname]
-
-# else:
-#     if nickname not in server_state["user"]:
-#         server_state["user"].append(nickname)
-
-# if st.button('clear'): 
-#     server_state["chat_messages"] = []
-#     st.experimental_rerun()
-# if st.button('user_clear'): 
-#    server_state["user"] = [nickname]
-#    st.experimental_rerun()
-    
-# if server_state["user"]:
-#     st.info('\n'.join(server_state["user"]))
-# st.text_input("Message", key="message_input", on_change=on_message_input)
-# st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)
-
 import streamlit as st
-
+from datetime import datetime,timedelta
 from streamlit_server_state import server_state, server_state_lock
+ 
+e =st.empty()
+nickname = e.text_input("Nick name", key="nickname")
 
-nickname = st.text_input("Nick name", key="nickname")
-if not nickname:
+if not nickname:    
     st.stop()
-
 
 def on_message_input():
     new_message_text = st.session_state["message_input"]
     if not new_message_text:
-        return
-    
-    st.session_state["chat_messages"] = st.session_state["message_input"]
-    st.session_state["message_input"] = ""
-    
+        return 
+
+#     st.session_state["chat_messages"] = st.session_state["message_input"]
+#     st.session_state["message_input"] = ""
+
     new_message_packet = {
         "nickname": nickname,
         "text": new_message_text,
+        "time": (datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M:%S')
     }
+
     with server_state_lock["chat_messages"]:
         server_state["chat_messages"] = server_state["chat_messages"] + [
-            new_message_packet
+            f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
         ]
-
-
+        
+        
+st.write(f"### HELLO, {nickname}🎈")
 with server_state_lock["chat_messages"]:
     if "chat_messages" not in server_state:
         server_state["chat_messages"] = []
 
-st.text_input("Message", key="message_input", on_change=on_message_input)
 
-st.write(server_state["chat_messages"])
+e.empty()
+
+if "user" not in server_state:
+    server_state["user"] = [nickname]
+
+else:
+    if nickname not in server_state["user"]:
+        server_state["user"].append(nickname)
+
+if st.button('clear'): 
+    server_state["chat_messages"] = []
+    st.experimental_rerun()
+if st.button('user_clear'): 
+   server_state["user"] = [nickname]
+   st.experimental_rerun()
+    
+if server_state["user"]:
+    st.info('\n'.join(server_state["user"]))
+st.text_input("Message", key="message_input", on_change=on_message_input)
+st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)
+
 

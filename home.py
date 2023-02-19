@@ -197,16 +197,16 @@ with server_state_lock["chat_messages"]:
         server_state["chat_messages"] = []
     if "user" not in server_state:
         server_state["user"] = [nickname]
+    else:
+        sever_state["user"].apeend(nickname)
 
-if "user" not in st.session_state:
-    st.session_state["user"] = server_state["user"]
 e.empty()
 
 if st.button('clear'): 
     server_state["chat_messages"] = []
     st.experimental_rerun()
 if st.button('user_clear'): 
-    server_state["user"] = [nickname]    
+    server_state["user"] = [nickname]
     st.experimental_rerun()
     
 user = '\n'.join(user())

@@ -212,3 +212,4 @@ st.info(user)
 st.text_input("Message", key="message_input", on_change=on_message_input)
 st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)
 
+server_state

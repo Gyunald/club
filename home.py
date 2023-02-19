@@ -189,14 +189,15 @@ def on_message_input():
             f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
         ]
 
-        if nickname not in server_state["user"]:
-            server_state["user"].append(nickname)
 
 with server_state_lock["chat_messages"]:
     if "chat_messages" not in server_state:
         server_state["chat_messages"] = []
     if "user" not in server_state:
         server_state["user"] = [nickname]
+    else:
+        if nickname not in server_state["user"]:
+            server_state["user"].append(nickname)
 
 e.empty()
 

@@ -163,10 +163,7 @@ from streamlit_server_state import server_state, server_state_lock
 
 e =st.empty()
 nickname = e.text_input("Nick name", key="nickname")
-
-if not nickname:
     
-    st.stop()
 def user():
     return server_state["user"]
 
@@ -185,42 +182,32 @@ def on_message_input():
     }
     
     with server_state_lock["chat_messages"]:
-        if len(server_state_lock["chat_messages"]) < 1 :
-            server_state["chat_messages"] = server_state["chat_messages"] + [
-                f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
-        ]
-        else:                
-            if (datetime.utcnow()+timedelta(hours=9)).minute != server_state["chat_messages"][-1].split(' ')[4].split(':')[1]:
-                server_state["chat_messages"] = server_state["chat_messages"] + [
-                f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
-            ]
-            else:
-                server_state["chat_messages"] = server_state["chat_messages"] + [
-                f"{new_message_packet['nickname']} : {new_message_packet['text']}"
-            ]
+        server_state["chat_messages"] = server_state["chat_messages"] + [
+            f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
 
 
-with server_state_lock["chat_messages"]:
-    if "chat_messages" not in server_state:
+if nickname:
+    with server_state_lock["chat_messages"]:
+        if "chat_messages" not in server_state:
+            server_state["chat_messages"] = []
+        if "user" not in server_state:
+            server_state["user"] = [nickname]
+        else:
+            if nickname not in server_state["user"]:
+                server_state["user"].append(nickname)
+
+    e.empty()
+
+    if st.button('clear'): 
         server_state["chat_messages"] = []
-    if "user" not in server_state:
-        server_state["user"] = [nickname]
-    else:
-        if nickname not in server_state["user"]:
-            server_state["user"].append(nickname)
+        st.experimental_rerun()
 
-e.empty()
+    #if st.button('user_clear'): 
+    #    server_state["user"] = [nickname]
+    #    st.experimental_rerun()
 
-if st.button('clear'): 
-    server_state["chat_messages"] = []
-    st.experimental_rerun()
-    
-#if st.button('user_clear'): 
-#    server_state["user"] = [nickname]
-#    st.experimental_rerun()
-    
-user = '\n'.join(user())
-st.info(user)
-st.text_input("Message", key="message_input", on_change=on_message_input)
-st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)
+    user = '\n'.join(user())
+    st.info(user)
+    st.text_input("Message", key="message_input", on_change=on_message_input)
+    st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)
 

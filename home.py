@@ -171,8 +171,8 @@ def on_message_input():
     if not new_message_text:
         return 
 
-    st.session_state["chat_messages"] = st.session_state["message_input"]
-    st.session_state["message_input"] = ""
+#     st.session_state["chat_messages"] = st.session_state["message_input"]
+#     st.session_state["message_input"] = ""
 
     new_message_packet = {
         "nickname": nickname,

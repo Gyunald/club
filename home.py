@@ -170,14 +170,7 @@ def on_message_input():
     new_message_text = st.session_state["message_input"]
     if not new_message_text:
         return 
-             
-    if "user" not in server_state:
-        server_state["user"] = [nickname]
-        
-    else:
-        if nickname not in server_state["user"]:
-            server_state["user"].append(nickname)
-            
+
     st.session_state["chat_messages"] = st.session_state["message_input"]
     st.session_state["message_input"] = ""
 
@@ -199,12 +192,21 @@ with server_state_lock["chat_messages"]:
         server_state["chat_messages"] = []
 
 
-    
 e.empty()
+
+if "user" not in server_state:
+    server_state["user"] = [nickname]
+
+else:
+    if nickname not in server_state["user"]:
+        server_state["user"].append(nickname)
 
 if st.button('clear'): 
     server_state["chat_messages"] = []
     st.experimental_rerun()
+if st.button('user_clear'): 
+   server_state["user"] = [nickname]
+   st.experimental_rerun()
 if server_state["user"]:
     st.info('\n'.join(server_state["user"]))
 st.text_input("Message", key="message_input", on_change=on_message_input)

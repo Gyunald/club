@@ -181,20 +181,19 @@ def on_message_input():
     with server_state_lock["chat_messages"]:
         server_state["chat_messages"] = server_state["chat_messages"] + [
             f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
-            
+
 e =st.empty()
 nickname = e.text_input("Nick name", key="nickname")
-
+with server_state_lock["chat_messages"]:
+    if "chat_messages" not in server_state:
+        server_state["chat_messages"] = []
+    if "user" not in server_state:
+        server_state["user"] = [nickname]
+    else:
+        if nickname not in server_state["user"]:
+            server_state["user"].append(nickname)
+            
 if nickname:
-    with server_state_lock["chat_messages"]:
-        if "chat_messages" not in server_state:
-            server_state["chat_messages"] = []
-        if "user" not in server_state:
-            server_state["user"] = [nickname]
-        else:
-            if nickname not in server_state["user"]:
-                server_state["user"].append(nickname)
-
     e.empty()
 
     if st.button('clear'): 

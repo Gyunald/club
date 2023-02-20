@@ -198,7 +198,7 @@ def on_message_input():
         "time": (datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M:%S')
     }
     with no_rerun():
-        st.session_state["message_input"] = ""
+        st.session_state["message_input"] = "1"
     with server_state_lock["chat_messages"]:
             server_state["chat_messages"] = server_state["chat_messages"] + [
                 f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"

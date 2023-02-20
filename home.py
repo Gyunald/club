@@ -235,6 +235,3 @@ if nickname:
     st.write(server_state.chat_messages)
     st.write(st.session_state.message_input)
     st.write(server_state.user)
-
-    st.write(f"text = {st.session_state['text']}")
-    st.write(f"ss = {st.session_state['message_input']}")

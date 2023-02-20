@@ -196,7 +196,7 @@ def on_message_input():
 
     new_message_packet = {
         "nickname": nickname,
-        "text": st.session_state["text"],
+        "text": new_message_text,
         "time": (datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M:%S')
     }
     with server_state_lock["chat_messages"]:

@@ -185,7 +185,9 @@ from streamlit_server_state import server_state, server_state_lock, no_rerun
 
 if "temp" not in st.session_state:
     st.session_state["temp"] = ""
-    
+if "message_input" not in st.session_state:
+    st.session_state["message_input"] = ""
+
 def on_message_input():
     new_message_text = st.session_state["message_input"]
     

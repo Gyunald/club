@@ -244,7 +244,7 @@ if nickname:
     st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)
     
     st.session_state["temp"]
-    
+    st.session_state["message_input"]
     st.write(server_state.chat_messages)
     st.write(st.session_state.message_input)
     st.write(server_state.user)

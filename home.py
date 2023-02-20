@@ -183,16 +183,8 @@ import streamlit as st
 from datetime import datetime,timedelta
 from streamlit_server_state import server_state, server_state_lock, no_rerun
 
-if "temp" not in st.session_state:
-    st.session_state["temp"] = ""
-if "message_input" not in st.session_state:
-    st.session_state["message_input"] = ""
-
 def on_message_input():
     new_message_text = st.session_state["message_input"]
-    
-    st.session_state["temp"] = st.session_state["text"]
-    st.session_state["text"] = ""
     
     st.session_state["message_input"] = ""
     
@@ -238,13 +230,10 @@ if nickname:
         server_state.clear()
 
     st.info('\n'.join(set(server_state["user"])))
-    st.text_input("Message", value = st.session_state["text"],key="message_input",on_change=on_message_input)
-    input = st.text_input("Input window", key="text", on_change=on_message_input)
+    st.text_input("Message",key="message_input",on_change=on_message_input)
 
     st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)
     
-    st.session_state["temp"]
-    st.session_state["message_input"]
     st.write(server_state.chat_messages)
     st.write(st.session_state.message_input)
     st.write(server_state.user)

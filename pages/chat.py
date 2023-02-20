@@ -23,7 +23,7 @@ def on_message_input():
                 f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
             ]
 
-    st.session_state["message_input"] = ""
+#     st.session_state["message_input"] = ""
 
 nickname = st.session_state.nickname
 

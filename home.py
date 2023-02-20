@@ -187,6 +187,7 @@ def on_message_input():
     new_message_text = st.session_state["message_input"]
 
     st.session_state["text"] = new_message_text
+    st.session_state["message_input"] = ""
 
     server_state["user"] = [nickname]
 
@@ -202,8 +203,7 @@ def on_message_input():
             server_state["chat_messages"] = server_state["chat_messages"] + [
                 f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
             ]
-    st.session_state["message_input"] = ""
-    
+
 e = st.empty()
 nickname = e.text_input('Nickname')
 
@@ -230,11 +230,9 @@ if nickname:
         st.session_state.clear()
         server_state.clear()
 
-    e = st.empty()
     st.info('\n'.join(set(server_state["user"])))
-    e.text_input("Message", key="message_input", on_change=on_message_input)
-    e.empty()
-    st.text_input("Message2", key="text", )
+    st.text_input("Message", key="message_input", on_change=on_message_input)
+    st.text_input("Message", key="text", on_change=on_message_input)
     st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)
 
     st.write(server_state.chat_messages)

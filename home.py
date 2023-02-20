@@ -186,11 +186,11 @@ from streamlit_server_state import server_state, server_state_lock, no_rerun
 def on_message_input():
     new_message_text = st.session_state["message_input"]
 
-    st.session_state["message_input"] = ""
+    
     
     with no_rerun():
         st.session_state["message_input"] = ""
-    
+    st.session_state["message_input"] = ""
     server_state["user"] = [nickname]
 
     if not new_message_text:

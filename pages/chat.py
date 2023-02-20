@@ -10,8 +10,8 @@ def on_message_input():
     if not new_message_text:
         return
     
-    with no_rerun:
-        st.session_state["message_input"] == ''
+#     with no_rerun:
+#         st.session_state["message_input"] == ''
 
     new_message_packet = {
         "nickname": nickname,

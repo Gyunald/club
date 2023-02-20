@@ -43,9 +43,9 @@ else:
 if st.button('claer'): 
     server_state["chat_messages"] = []
 
-if st.button('session_clear'): 
-    st.session_state.clear()
-    server_state.clear()
+# if st.button('session_clear'): 
+#     st.session_state.clear()
+#     server_state.clear()
 
 st.info('\n'.join(set(server_state["user"])))
 st.text_input("Message", key="message_input", on_change=on_message_input)

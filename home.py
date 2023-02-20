@@ -188,7 +188,7 @@ def on_message_input():
 
     st.session_state["text"] = new_message_text
     st.session_state["message_input"] = ""
-
+    st.session_state["text"] = ""
     server_state["user"] = [nickname]
 
     if not new_message_text:

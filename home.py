@@ -230,8 +230,11 @@ if nickname:
         st.session_state.clear()
         server_state.clear()
 
+    e = st.empty()
     st.info('\n'.join(set(server_state["user"])))
-    st.text_input("Message", key="message_input", on_change=on_message_input)
+    e.text_input("Message", key="message_input", on_change=on_message_input)
+    e.empty()
+    st.text_input("Message", key="text", on_change=on_message_input)
     st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)
 
     st.write(server_state.chat_messages)

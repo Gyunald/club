@@ -183,10 +183,17 @@ import streamlit as st
 from datetime import datetime,timedelta
 from streamlit_server_state import server_state, server_state_lock, no_rerun
 
+if "temp" not in st.session_state:
+    st.session_state["temp"] = ""
+    
 def on_message_input():
     new_message_text = st.session_state["message_input"]
-
-#     st.session_state["message_input"] = ""
+    
+    st.session_state["temp"] = st.session_state["text"]
+    st.session_state["text"] = ""
+    
+    # st.session_state["message_input"] = ""
+    
     server_state["user"] = [nickname]
 
     if not new_message_text:
@@ -197,7 +204,8 @@ def on_message_input():
         "text": new_message_text,
         "time": (datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M:%S')
     }
-    
+    with no_rerun():
+        st.session_state["message_input"] = ""
     with server_state_lock["chat_messages"]:
             server_state["chat_messages"] = server_state["chat_messages"] + [
                 f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
@@ -230,8 +238,12 @@ if nickname:
 
     st.info('\n'.join(set(server_state["user"])))
     st.text_input("Message", key="message_input", on_change=on_message_input)
-    st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)
+    input = st.text_input("Input window", key="text", on_change=on_message_input)
 
+    st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)
+    
+    st.session_state["temp"]
+    
     st.write(server_state.chat_messages)
     st.write(st.session_state.message_input)
     st.write(server_state.user)

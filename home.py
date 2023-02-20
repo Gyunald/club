@@ -186,11 +186,10 @@ from streamlit_server_state import server_state, server_state_lock, no_rerun
 def on_message_input():
     new_message_text = st.session_state["message_input"]
 
-    st.session_state["text"] = ""
-    
     st.session_state["message_input"] = ""
     
-    st.session_state["message_input"] = st.session_state["text"]
+    with no_rerun():
+        st.session_state["message_input"] = ""
     
     server_state["user"] = [nickname]
 
@@ -213,8 +212,7 @@ nickname = e.text_input('Nickname')
 if nickname:
     e.empty()
     st.write(f"### Hi, {nickname}🎈")
-    if 'text' not in st.session_state:
-        st.session_state["text"] = ''
+
     with server_state_lock["chat_messages"]:    
         if "chat_messages" not in server_state:
             server_state["chat_messages"] = []

@@ -22,9 +22,10 @@ from datetime import datetime,timedelta
 from streamlit_server_state import server_state, server_state_lock, no_rerun
 
 def on_message_input():
-    new_message_text = st.session_state["message_input"]
-    
-#     st.session_state["message_input"] = ""
+    new_message_text = st.session_state[k]
+
+    st.session_state["text"] = st.session_state[k]
+    st.session_state[k] = ""
     
     server_state["user"] = [nickname]
 
@@ -49,7 +50,7 @@ else:
     nickname = empty.text_input('Nickname',value=st.session_state.nickname)
     st.session_state.nickname = nickname
 nickname = st.session_state.nickname
-
+k = f"message_input{nickname}"
 if nickname :
     empty.empty()
     st.write(f"### Hi, {nickname}🎈")
@@ -73,7 +74,7 @@ if nickname :
         server_state.clear()
 
     st.info('\n'.join(set(server_state["user"])))
-    st.text_input("Message",key="message_input",on_change=on_message_input)
+    st.text_input("Message",key=k,on_change=on_message_input)
 
     st.text_area('Chat','\n'.join(server_state["chat_messages"][::-1]), height=150)
 

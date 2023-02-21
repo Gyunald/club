@@ -41,9 +41,12 @@ def on_message_input():
             server_state["chat_messages"] = server_state["chat_messages"] + [
                 f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
             ]
-empty = st.empty()      
+empty = st.empty()
 if 'nickname' not in st.session_state:
-    nickname = st.text_input('Nickname)')
+    nickname = st.text_input('Nickname')
+    st.session_state.nickname = nickname
+else:
+    nickname = empty.text_input('Nickname',value=st.session_state.nickname)
     st.session_state.nickname = nickname
 nickname = st.session_state.nickname
 

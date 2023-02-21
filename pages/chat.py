@@ -3,9 +3,6 @@ import streamlit as st
 from datetime import datetime,timedelta
 from streamlit_server_state import server_state, server_state_lock, no_rerun
 
-e = st.empty()
-nickname = e.text_input('Nickname')
-
 def on_message_input():
     new_message_text = st.session_state["message_input"]
     
@@ -26,10 +23,9 @@ def on_message_input():
             server_state["chat_messages"] = server_state["chat_messages"] + [
                 f"{new_message_packet['nickname']} : {new_message_packet['text']} \n {new_message_packet['time']}"
             ]
+nickname = st.session_state.nickname
 
 if nickname :
-    e = st.empty()
-
     st.write(f"### Hi, {nickname}🎈")
 
     with server_state_lock["chat_messages"]:    

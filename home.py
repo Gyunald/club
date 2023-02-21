@@ -51,7 +51,7 @@ else:
 nickname = st.session_state.nickname
 
 if nickname :
-    empty = st.empty()
+    empty.empty()
     st.write(f"### Hi, {nickname}🎈")
 
     with server_state_lock["chat_messages"]:    

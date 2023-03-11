@@ -16,7 +16,7 @@ def on_message_input():
     new_message_packet = {
         "nickname": nickname,
         "text": new_message_text,
-        "time": (datetime.utcnow()+timedelta(hours=9)).strftime('%H:%M:%S')
+        "time": datetime.utcnow()+timedelta(hours=9)).strftime('%m.%d %H:%M:%S')
     }
 
     with server_state_lock["chat_messages"]:
@@ -39,8 +39,8 @@ if nickname :
         if nickname not in server_state["user"]:
             server_state["user"] = [nickname] + server_state["user"]
 
-#     if st.button('claer'): 
-#         server_state["chat_messages"] = []
+    if st.button('claer'): 
+        server_state["chat_messages"] = []
 
 #     if st.button('session_clear'): 
 #         st.session_state.clear()

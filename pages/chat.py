@@ -16,7 +16,7 @@ def on_message_input():
     new_message_packet = {
         "nickname": nickname,
         "text": new_message_text,
-        "time": (datetime.utcnow()+timedelta(hours=9)).strftime('%m.%d %H:%M:%S'))
+        "time": (datetime.utcnow()+timedelta(hours=9)).strftime('%m.%d %H:%M:%S')
     }
 
     with server_state_lock["chat_messages"]:

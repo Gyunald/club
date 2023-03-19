@@ -260,8 +260,8 @@ if nickname :
             
     st.subheader(f"club {emoji}")
     with st.expander('club'):
-        c,c2 = st.columns([1,1])
-        with c:
+#         c,c2 = st.columns([1,1])
+#         with c:
             with st.form("Notice",clear_on_submit=True):
                 a = notice_list.find_one({'_id' : st.session_state.club},{'_id':False})                
                 a = [(f"{list(i.keys())[0]} : {list(i.values())[0]}") for i in a['채팅']]
@@ -303,7 +303,7 @@ if nickname :
                 #         {'$set' : {'공지':[]}})
                 #     st.experimental_rerun()
 
-        with c2:
+#         with c2:
             with st.form("my_form",clear_on_submit=True):
                 club = st.selectbox('club',[st.session_state.club])
                 date = st.date_input('날짜',value=now_date,min_value=now_date,max_value=max_date).strftime('%Y.%m.%d')

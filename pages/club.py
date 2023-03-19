@@ -248,11 +248,11 @@ if nickname :
                 st.success('[🚕 네이버지도](%s)' % f"https://map.naver.com/v5/search/{word}")
                 st.warning('[🚗 카카오맵](%s)' % f'https://map.kakao.com/link/search/{word}')
 
-    logout = st.button('로그아웃',type='primary')
+        logout = st.button('로그아웃',type='primary')
 
-    if logout:
-        st.session_state.clear()
-        switch_page('HOME')
+        if logout:
+            st.session_state.clear()
+            switch_page('HOME')
 else:
     st.warning('홈에서 클럽을 선택하세요.')
 

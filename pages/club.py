@@ -260,15 +260,15 @@ if nickname :
             
     st.subheader(f"club {emoji}")
 #         c,c2 = st.columns([1,1])
-    with st.expander('Notice',expanded=True):
-        with st.form("Notice",clear_on_submit=True):
+    with st.expander('여기요!',expanded=True):
+        with st.form("여기요!",clear_on_submit=True):
             a = notice_list.find_one({'_id' : st.session_state.club},{'_id':False})                
             a = [(f"{list(i.keys())[0]} : {list(i.values())[0]}") for i in a['채팅']]
-            t = st.text_area('Notice', value= '\n'.join(a), height=200,disabled=True)
+            t = st.text_area('소근소근', value= '\n'.join(a), height=200,disabled=True)
 
-            t2 = st.text_input('Shout out!')
+            t2 = st.text_input('',placeholder='공지를 입력하세요!')
 
-            submitted = st.form_submit_button('공지등록',use_container_width=True,type='primary')
+            submitted = st.form_submit_button('외쳐요!',use_container_width=True,type='primary')
             st.session_state.chat.append({nickname : f"{t2} \n🎈 {(datetime.utcnow()+timedelta(hours=9)).strftime('%Y.%m.%d')}"})
 
             if submitted :
@@ -302,7 +302,7 @@ if nickname :
                 #         {'$set' : {'공지':[]}})
                 #     st.experimental_rerun()
 
-    with st.expander('Create a club',expanded=False):
+    with st.expander('함께해요!',expanded=False):
         with st.form("my_form",clear_on_submit=True):
 #                 club = st.selectbox('club',[st.session_state.club])
             date = st.date_input('날짜',value=now_date,min_value=now_date,max_value=max_date).strftime('%Y.%m.%d')
@@ -446,12 +446,12 @@ if nickname :
                 word = j.get('장소').replace(' ','')
                 st.success('[🚕 네이버지도](%s)' % f"https://map.naver.com/v5/search/{word}")
                 st.warning('[🚗 카카오맵](%s)' % f'https://map.kakao.com/link/search/{word}')
-                
-        logout = st.button('로그아웃',type='primary')
-        
-        if logout:
-            st.session_state.clear()
-            switch_page('HOME')
+
+    logout = st.button('로그아웃',type='primary')
+
+    if logout:
+        st.session_state.clear()
+        switch_page('HOME')
 else:
     st.warning('홈에서 클럽을 선택하세요.')
 

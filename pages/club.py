@@ -65,44 +65,45 @@ if nickname :
     st.subheader(f"club {emoji}")
 #         c,c2 = st.columns([1,1])
     with st.expander('여기요!',expanded=True):
-        a = notice_list.find_one({'_id' : st.session_state.club},{'_id':False})                
-        a = [(f"{list(i.keys())[0]} : {list(i.values())[0]}") for i in a['채팅']]
-        t = st.text_area('', value= '\n'.join(a), height=200,disabled=True)
+        with st.form('주목!',clear_on_submit=True):
+            a = notice_list.find_one({'_id' : st.session_state.club},{'_id':False})                
+            a = [(f"{list(i.keys())[0]} : {list(i.values())[0]}") for i in a['채팅']]
+            t = st.text_area('', value= '\n'.join(a), height=200,disabled=True)
 
-        t2 = st.text_input('외쳐요!',placeholder='여기에 입력하세요!')
+            t2 = st.text_input('촤라락!',placeholder='여기에 입력하세요!')
 
-        submitted = st.button('외쳐요!',use_container_width=True,type='primary')
-        st.session_state.chat.append({nickname : f"{t2} \n🎈 {(datetime.utcnow()+timedelta(hours=9)).strftime('%Y.%m.%d')}"})
+            submitted = st.form_submit_button('외쳐요!',use_container_width=True,type='primary')
+            st.session_state.chat.append({nickname : f"{t2} \n🎈 {(datetime.utcnow()+timedelta(hours=9)).strftime('%Y.%m.%d')}"})
 
-        if submitted :
-            if t2 != '':
-                notice_list.update_one(
-                    {'_id': st.session_state.club},
-                    {'$push' : {'채팅' : st.session_state.chat[-1]}}
-                    )
-                st.session_state.chat.clear()
-                st.experimental_rerun()
-                
-#         rerun = st.button('새로고침')
+            if submitted :
+                if t2 != '':
+                    notice_list.update_one(
+                        {'_id': st.session_state.club},
+                        {'$push' : {'채팅' : st.session_state.chat[-1]}}
+                        )
+                    st.session_state.chat.clear()
+                    st.experimental_rerun()
 
-#         if rerun:
-#             st.experimental_rerun()              
+    #         rerun = st.button('새로고침')
 
-        
-        # submitted2 = st.form_submit_button('최근삭제',use_container_width=True)
-        # if submitted2 :
-        #     notice_list.update_one(
-        #         {'_id': f"{(datetime.utcnow()+timedelta(hours=9)).strftime('%Y.%m.%d')}"},
-        #         {'$pop': {'공지' : -1}})
-        #     st.experimental_rerun()
-        
-        # # clear
-        # submitted3 = st.form_submit_button('비우기',use_container_width=True)
-        # if submitted3 :
-        #     notice_list.update_one(
-        #         {'_id' : st.session_state.club},
-        #         {'$set' : {'공지':[]}})
-        #     st.experimental_rerun()
+    #         if rerun:
+    #             st.experimental_rerun()              
+
+
+            # submitted2 = st.form_submit_button('최근삭제',use_container_width=True)
+            # if submitted2 :
+            #     notice_list.update_one(
+            #         {'_id': f"{(datetime.utcnow()+timedelta(hours=9)).strftime('%Y.%m.%d')}"},
+            #         {'$pop': {'공지' : -1}})
+            #     st.experimental_rerun()
+
+            # # clear
+            # submitted3 = st.form_submit_button('비우기',use_container_width=True)
+            # if submitted3 :
+            #     notice_list.update_one(
+            #         {'_id' : st.session_state.club},
+            #         {'$set' : {'공지':[]}})
+            #     st.experimental_rerun()
 
     with st.expander('함께해요!',expanded=False):
         with st.form("my_form",clear_on_submit=True):

@@ -325,7 +325,7 @@ if nickname :
                             {'_id': st.session_state.club},
                             {'$push' : {'채팅' : st.session_state.chat[-1]}}
                             )
-                            st.experimental_rerun()
+                    st.experimental_rerun()
                     
                 js = f"""
                 <script>

@@ -275,6 +275,7 @@ if nickname :
                 {'$push' : {'채팅' : st.session_state.chat[-1]}}
                 )
             st.session_state.chat.clear()
+            st.experimental_rerun()
             
 #         if submitted :
 #             if t2 != '':

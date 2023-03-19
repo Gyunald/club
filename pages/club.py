@@ -455,8 +455,6 @@ if nickname :
             switch_page('HOME')
     else:
         st.warning('홈에서 클럽을 선택하세요.')
-else:
-        st.warning('홈에서 로그인하세요.')
 
 if st.button('홈으로'):
     switch_page('HOME')

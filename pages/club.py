@@ -260,7 +260,7 @@ if nickname :
             emoji = '🎲'
             
         st.subheader(f"club {emoji}")
-        with st.expander(''):
+        with st.expander('club'):
             c,c2 = st.columns([1,1])
             with c:
                 with st.form("my_form",clear_on_submit=True):

@@ -321,11 +321,11 @@ if nickname :
                         if t2 != '':
                             st.session_state.chat.append({nickname : t2})
 
-                            notice_list.update_one(
-                                {'_id': st.session_state.club},
-                                {'$push' : {'채팅' : st.session_state.chat[-1]}}
-                                )
-                            st.experimental_rerun()
+#                             notice_list.update_one(
+#                                 {'_id': st.session_state.club},
+#                                 {'$push' : {'채팅' : st.session_state.chat[-1]}}
+#                                 )
+#                             st.experimental_rerun()
                 
 #         rerun = st.button('새로고침')
 

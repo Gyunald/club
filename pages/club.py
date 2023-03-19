@@ -317,12 +317,13 @@ if nickname :
 
                     submitted = st.form_submit_button('공지등록',use_container_width=True,type='primary')
                     st.session_state.chat.append({nickname : f"{t2} \n🎈 {(datetime.utcnow()+timedelta(hours=9)).strftime('%Y.%m.%d')}"})
-                    notice_list.update_one(
-                        {'_id': st.session_state.club},
-                        {'$push' : {'채팅' : st.session_state.chat[-1]}}
-                        )
+
                     if submitted :
                         if t2 != '':
+                            notice_list.update_one(
+                                {'_id': st.session_state.club},
+                                {'$push' : {'채팅' : st.session_state.chat[-1]}}
+                                )
                             st.session_state.chat.clear()
                             st.experimental_rerun()
                 

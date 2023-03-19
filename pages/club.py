@@ -467,6 +467,7 @@ js = f"""
             var textAreas = parent.document.querySelectorAll('.stTextArea textarea');
             for (let index = 0; index < textAreas.length; index++) {{
                 textAreas[index].style.color = 'black'
+                textAreas[index].style.fontWeight = 'bold';
                 textAreas[index].scrollTop = textAreas[index].scrollHeight;
             }}
         }}
@@ -481,7 +482,7 @@ st.markdown("""
     }
 
     .stTextArea [data-baseweb=base-input] [disabled=""]{
-        -webkit-text-fill-color: black;
+        -webkit-text-fill-color: rgb(110, 112, 116);
     }
     </style>
     """,unsafe_allow_html=True)

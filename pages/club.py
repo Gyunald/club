@@ -233,15 +233,14 @@ else:
 if 'type_참' not in st.session_state:
     st.session_state.type_참 = ''
     st.session_state.type_불참 = ''
-    
-if 'chat' not in st.session_state:
-    st.session_state.chat = []
 
 nickname = st.session_state.nickname
 now_date = (datetime.utcnow()+timedelta(hours=9))
 max_date = now_date.replace(year=now_date.year+1,month=1,day=1) - timedelta(days=1)
 
 if nickname :    
+    if 'chat' not in st.session_state:
+        st.session_state.chat = []
     collection = db[st.session_state.club]
     notice_list = notice[(datetime.utcnow()+timedelta(hours=9)).strftime('%Y.%m.%d')]
     check_notice = notice_list.find_one({'_id': st.session_state.club})

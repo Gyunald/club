@@ -276,6 +276,7 @@ if nickname :
                 )
             st.session_state.chat.clear()
             st.experimental_rerun()
+        st.stop()
             
 #         if submitted :
 #             if t2 != '':
@@ -356,7 +357,6 @@ if nickname :
                     st.warning('이미 같은장소에 모임이 있습니다.')
                     
     st.write('---')
-
             
     c = st.columns(4)
 

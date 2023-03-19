@@ -354,10 +354,10 @@ if nickname :
 
                 st.components.v1.html(js)
                 
-                rerun = st.button('새로고침')
+        rerun = st.button('새로고침')
 
-                if rerun:
-                    st.experimental_rerun()
+        if rerun:
+            st.experimental_rerun()
                 
  
                 

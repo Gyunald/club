@@ -265,7 +265,7 @@ if nickname :
             with st.form("Notice",clear_on_submit=True):
                 a = notice_list.find_one({'_id' : st.session_state.club},{'_id':False})                
                 a = [(f"{list(i.keys())[0]} : {list(i.values())[0]}") for i in a['채팅']]
-                t = st.text_area('Notice', value= '\n'.join(a), height=358,disabled=True)
+                t = st.text_area('Notice', value= '\n'.join(a), height=200,disabled=True)
 
                 t2 = st.text_input('Shout out!')
 
@@ -305,7 +305,7 @@ if nickname :
 
 #         with c2:
             with st.form("my_form",clear_on_submit=True):
-                club = st.selectbox('club',[st.session_state.club])
+#                 club = st.selectbox('club',[st.session_state.club])
                 date = st.date_input('날짜',value=now_date,min_value=now_date,max_value=max_date).strftime('%Y.%m.%d')
                 empty = st.empty()
                 place = empty.selectbox('장소',st.session_state.place,help='장소를 직접 입력하려면 장소추가 버튼을 누르세요.')

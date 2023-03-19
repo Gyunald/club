@@ -319,8 +319,7 @@ if nickname :
                     submitted = st.form_submit_button('공지등록',use_container_width=True,type='primary')
                     if submitted :
                         if t2 != '':
-                            st.session_state.chat.append({nickname : t2})
-
+                            st.session_state.chat.append({nickname : f"{t2} \n🎈 {(datetime.utcnow()+timedelta(hours=9)).strftime('%Y.%m.%d')}"})
                             notice_list.update_one(
                                 {'_id': st.session_state.club},
                                 {'$push' : {'채팅' : st.session_state.chat[-1]}}
@@ -352,113 +351,113 @@ if nickname :
         st.write('---')
 
             
-        c = st.columns(4)
+#         c = st.columns(4)
         
-        doc = list(collection.find())
-        for i,j in zip(range(len(c)), reversed(doc)):
-            doc_list = j.get('참가목록')
-            doc_list_non = j.get('불참가목록')
-            standard = now_date.strftime('%m-%d') > j['날짜']
+#         doc = list(collection.find())
+#         for i,j in zip(range(len(c)), reversed(doc)):
+#             doc_list = j.get('참가목록')
+#             doc_list_non = j.get('불참가목록')
+#             standard = now_date.strftime('%m-%d') > j['날짜']
             
-            if j not in st.session_state:
-                st.session_state[j] = False
+#             if j not in st.session_state:
+#                 st.session_state[j] = False
 
-            if j['인원수'] == j['정원']:
-                st.session_state[j] = True
-                if nickname in doc_list:
-                    st.session_state[j] = False
+#             if j['인원수'] == j['정원']:
+#                 st.session_state[j] = True
+#                 if nickname in doc_list:
+#                     st.session_state[j] = False
 
-            if standard:
-                st.session_state[j] = True
+#             if standard:
+#                 st.session_state[j] = True
 
-            if nickname in doc_list:
-                st.session_state.type_참 = 'primary'
-                st.session_state.type_불참 = 'secondary'
+#             if nickname in doc_list:
+#                 st.session_state.type_참 = 'primary'
+#                 st.session_state.type_불참 = 'secondary'
                 
-            elif nickname in doc_list_non:
-                st.session_state.type_참 = 'secondary'
-                st.session_state.type_불참 = 'primary'
+#             elif nickname in doc_list_non:
+#                 st.session_state.type_참 = 'secondary'
+#                 st.session_state.type_불참 = 'primary'
 
-            else: 
-                st.session_state.type_참 = 'secondary'
-                st.session_state.type_불참 = 'secondary'
+#             else: 
+#                 st.session_state.type_참 = 'secondary'
+#                 st.session_state.type_불참 = 'secondary'
 
-            with c[i]:
-                with st.form('form'+str(i)):
-                    st.write(f"##### {j.get('날짜')} 🏸 {j.get('시간')}")
-                    st.write(f"{j.get('장소')}")
+#             with c[i]:
+#                 with st.form('form'+str(i)):
+#                     st.write(f"##### {j.get('날짜')} 🏸 {j.get('시간')}")
+#                     st.write(f"{j.get('장소')}")
                     
-                    참 = st.form_submit_button('참여',on_click=disabled_참, disabled=st.session_state[j],use_container_width=True, type= st.session_state.type_참)
-                    불참 = st.form_submit_button('불참', on_click=disabled_불참, disabled=st.session_state[j],use_container_width=True,type= st.session_state.type_불참)
+#                     참 = st.form_submit_button('참여',on_click=disabled_참, disabled=st.session_state[j],use_container_width=True, type= st.session_state.type_참)
+#                     불참 = st.form_submit_button('불참', on_click=disabled_불참, disabled=st.session_state[j],use_container_width=True,type= st.session_state.type_불참)
                     
-                    if j.get('작성자') == nickname:
-                        삭제 = st.form_submit_button('삭제',use_container_width=True,type='primary')
-                        if 삭제:
-                            check = st.text_input('렬루?',placeholder="'y' 치고 클릭").lower()
-                            if check == 'y':
-                                collection.delete_one(  
-                                    {'날짜': f"{j.get('날짜')}",'시간' : f"{j.get('시간')}",'장소': f"{j.get('장소')}"})
-                                st.experimental_rerun()
+#                     if j.get('작성자') == nickname:
+#                         삭제 = st.form_submit_button('삭제',use_container_width=True,type='primary')
+#                         if 삭제:
+#                             check = st.text_input('렬루?',placeholder="'y' 치고 클릭").lower()
+#                             if check == 'y':
+#                                 collection.delete_one(  
+#                                     {'날짜': f"{j.get('날짜')}",'시간' : f"{j.get('시간')}",'장소': f"{j.get('장소')}"})
+#                                 st.experimental_rerun()
                                 
-                    if 참 :
-                        if j['인원수'] < j['정원']:
-                            if nickname not in doc_list:
-                                collection.update_one(
-                                    {'날짜': f"{j.get('날짜')}",'시간' : f"{j.get('시간')}",'장소': f"{j.get('장소')}"},
-                                    {'$inc' : {'인원수': +1}})
-                                collection.update_one(
-                                    {'날짜': f"{j.get('날짜')}",'시간' : f"{j.get('시간')}",'장소': f"{j.get('장소')}"},
-                                    {'$push': {'참가목록' : nickname}})
-                                collection.update_one(
-                                    {'날짜': f"{j.get('날짜')}",'시간' : f"{j.get('시간')}",'장소': f"{j.get('장소')}"},
-                                    {'$pull': {'불참가목록' : nickname}})
+#                     if 참 :
+#                         if j['인원수'] < j['정원']:
+#                             if nickname not in doc_list:
+#                                 collection.update_one(
+#                                     {'날짜': f"{j.get('날짜')}",'시간' : f"{j.get('시간')}",'장소': f"{j.get('장소')}"},
+#                                     {'$inc' : {'인원수': +1}})
+#                                 collection.update_one(
+#                                     {'날짜': f"{j.get('날짜')}",'시간' : f"{j.get('시간')}",'장소': f"{j.get('장소')}"},
+#                                     {'$push': {'참가목록' : nickname}})
+#                                 collection.update_one(
+#                                     {'날짜': f"{j.get('날짜')}",'시간' : f"{j.get('시간')}",'장소': f"{j.get('장소')}"},
+#                                     {'$pull': {'불참가목록' : nickname}})
                                     
-                                st.experimental_rerun()
+#                                 st.experimental_rerun()
                         
-                    if 불참:
-                        doc_cancel = j.get('불참')
-                        collection.update_one(
-                            {'날짜': f"{j.get('날짜')}",'시간' : f"{j.get('시간')}",'장소': f"{j.get('장소')}"},
-                            {'$pull': {'참가목록' : nickname}})
+#                     if 불참:
+#                         doc_cancel = j.get('불참')
+#                         collection.update_one(
+#                             {'날짜': f"{j.get('날짜')}",'시간' : f"{j.get('시간')}",'장소': f"{j.get('장소')}"},
+#                             {'$pull': {'참가목록' : nickname}})
                         
-                        if nickname not in doc_list_non :
-                            collection.update_one(
-                                {'날짜': f"{j.get('날짜')}",'시간' : f"{j.get('시간')}",'장소': f"{j.get('장소')}"},
-                                {'$push': {'불참가목록' : nickname}})
+#                         if nickname not in doc_list_non :
+#                             collection.update_one(
+#                                 {'날짜': f"{j.get('날짜')}",'시간' : f"{j.get('시간')}",'장소': f"{j.get('장소')}"},
+#                                 {'$push': {'불참가목록' : nickname}})
                             
-                        if nickname in doc_list:
-                            collection.update_one(
-                                {'날짜': f"{j.get('날짜')}",'시간' : f"{j.get('시간')}",'장소': f"{j.get('장소')}"},
-                                {'$inc' : {'인원수': -1}})
-                        st.experimental_rerun()
+#                         if nickname in doc_list:
+#                             collection.update_one(
+#                                 {'날짜': f"{j.get('날짜')}",'시간' : f"{j.get('시간')}",'장소': f"{j.get('장소')}"},
+#                                 {'$inc' : {'인원수': -1}})
+#                         st.experimental_rerun()
                         
-                    with st.expander(f"{j['인원수']}/{j['정원']} 명"):
-                        if not doc_list:
-                            st.info('🙈')
-                        else:
-                            st.info('\n'.join(doc_list))
+#                     with st.expander(f"{j['인원수']}/{j['정원']} 명"):
+#                         if not doc_list:
+#                             st.info('🙈')
+#                         else:
+#                             st.info('\n'.join(doc_list))
                         
-                        if not doc_list_non:
-                            st.error('🙉')
-                        else:
-                            st.error('\n'.join(doc_list_non))
+#                         if not doc_list_non:
+#                             st.error('🙉')
+#                         else:
+#                             st.error('\n'.join(doc_list_non))
 
-                    word = j.get('장소').replace(' ','')
-                    st.success('[🚕 네이버지도](%s)' % f"https://map.naver.com/v5/search/{word}")
-                    st.warning('[🚗 카카오맵](%s)' % f'https://map.kakao.com/link/search/{word}')
+#                     word = j.get('장소').replace(' ','')
+#                     st.success('[🚕 네이버지도](%s)' % f"https://map.naver.com/v5/search/{word}")
+#                     st.warning('[🚗 카카오맵](%s)' % f'https://map.kakao.com/link/search/{word}')
                 
-        logout = st.button('로그아웃',type='primary')
+#         logout = st.button('로그아웃',type='primary')
         
-        if logout:
-            st.session_state.clear()
-            switch_page('HOME')
-    else:
-        st.warning('홈에서 클럽을 선택하세요.')
-else:
-        st.warning('홈에서 로그인하세요.')
+#         if logout:
+#             st.session_state.clear()
+#             switch_page('HOME')
+#     else:
+#         st.warning('홈에서 클럽을 선택하세요.')
+# else:
+#         st.warning('홈에서 로그인하세요.')
 
-if st.button('홈으로'):
-    switch_page('HOME')
+# if st.button('홈으로'):
+#     switch_page('HOME')
     
 js = f"""
     <script>

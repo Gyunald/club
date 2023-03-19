@@ -326,33 +326,6 @@ if nickname :
                             {'$push' : {'채팅' : st.session_state.chat[-1]}}
                             )
                     st.experimental_rerun()
-                    
-                js = f"""
-                <script>
-                    function scroll(dummy_var_to_force_repeat_execution){{
-                        var textAreas = parent.document.querySelectorAll('.stTextArea textarea');
-                        for (let index = 0; index < textAreas.length; index++) {{
-                            textAreas[index].style.color = 'black'
-                            textAreas[index].scrollTop = textAreas[index].scrollHeight;
-                        }}
-                    }}
-                    scroll({len(st.session_state.chat)})
-                </script>
-                """
-                st.markdown("""
-                    <style>
-                    .stTextArea [data-baseweb=base-input] {
-
-                        -webkit-text-fill-color: white;
-                    }
-
-                    .stTextArea [data-baseweb=base-input] [disabled=""]{
-                        -webkit-text-fill-color: rgb(110, 112, 116);
-                    }
-                    </style>
-                    """,unsafe_allow_html=True)
-
-                st.components.v1.html(js)
                 
         rerun = st.button('새로고침')
 
@@ -487,3 +460,30 @@ else:
 
 if st.button('홈으로'):
     switch_page('HOME')
+    
+js = f"""
+    <script>
+        function scroll(dummy_var_to_force_repeat_execution){{
+            var textAreas = parent.document.querySelectorAll('.stTextArea textarea');
+            for (let index = 0; index < textAreas.length; index++) {{
+                textAreas[index].style.color = 'black'
+                textAreas[index].scrollTop = textAreas[index].scrollHeight;
+            }}
+        }}
+        scroll({len(st.session_state.chat)})
+    </script>
+    """
+st.markdown("""
+    <style>
+    .stTextArea [data-baseweb=base-input] {
+
+        -webkit-text-fill-color: white;
+    }
+
+    .stTextArea [data-baseweb=base-input] [disabled=""]{
+        -webkit-text-fill-color: white;
+    }
+    </style>
+    """,unsafe_allow_html=True)
+
+st.components.v1.html(js)

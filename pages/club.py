@@ -347,7 +347,7 @@ if nickname :
                     }
 
                     .stTextArea [data-baseweb=base-input] [disabled=""]{
-                        -webkit-text-fill-color: white;
+                        -webkit-text-fill-color: rgb(110, 112, 116);
                     }
                     </style>
                     """,unsafe_allow_html=True)

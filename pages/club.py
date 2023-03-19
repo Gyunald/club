@@ -399,10 +399,9 @@ if nickname :
                                 collection.delete_one(  
                                     {'날짜': f"{j.get('날짜')}",'시간' : f"{j.get('시간')}",'장소': f"{j.get('장소')}"})
                                 st.experimental_rerun()
+                                
                     if 참 :
                         if j['인원수'] < j['정원']:
-                            doc_application = j.get('참여')
-                            
                             if nickname not in doc_list:
                                 collection.update_one(
                                     {'날짜': f"{j.get('날짜')}",'시간' : f"{j.get('시간')}",'장소': f"{j.get('장소')}"},
@@ -414,7 +413,7 @@ if nickname :
                                     {'날짜': f"{j.get('날짜')}",'시간' : f"{j.get('시간')}",'장소': f"{j.get('장소')}"},
                                     {'$pull': {'불참가목록' : nickname}})
                                     
-                            st.experimental_rerun()
+                                st.experimental_rerun()
                         
                     if 불참:
                         doc_cancel = j.get('불참')

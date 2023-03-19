@@ -466,8 +466,7 @@ js = f"""
         function scroll(dummy_var_to_force_repeat_execution){{
             var textAreas = parent.document.querySelectorAll('.stTextArea textarea');
             for (let index = 0; index < textAreas.length; index++) {{
-                textAreas[index].style.color = 'black'
-                textAreas[index].style.fontWeight = 'bold';
+                textAreas[index].style.color = 'black'                
                 textAreas[index].scrollTop = textAreas[index].scrollHeight;
             }}
         }}

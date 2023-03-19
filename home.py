@@ -169,7 +169,7 @@ st.write(f"### Hi, {nickname} 🎈")
 
 if nickname:
     empty.empty()
-    st.write('# IMI CE Korea Club')
+    st.write('# Club')
     with expander('dynamic'):
         c = st.columns(3)
         with c[0]:

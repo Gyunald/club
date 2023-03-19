@@ -323,6 +323,7 @@ if nickname :
                         )
                     if submitted :
                         if t2 != '':
+                            st.session_state.chat.clear()
                             st.experimental_rerun()
                 
 #         rerun = st.button('새로고침')

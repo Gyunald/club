@@ -265,19 +265,25 @@ if nickname :
         a = [(f"{list(i.keys())[0]} : {list(i.values())[0]}") for i in a['채팅']]
         t = st.text_area('', value= '\n'.join(a), height=200,disabled=True)
 
-        t2 = st.text_input('해치지 않아요!',placeholder='여기에 입력하세요!')
+        t2 = st.text_input('외쳐요!',placeholder='여기에 입력하세요!')
 
-        submitted = st.button('외쳐요!',use_container_width=True,type='primary')
+#         submitted = st.button('외쳐요!',use_container_width=True,type='primary')
         st.session_state.chat.append({nickname : f"{t2} \n🎈 {(datetime.utcnow()+timedelta(hours=9)).strftime('%Y.%m.%d')}"})
-
-        if submitted :
-            if t2 != '':
-                notice_list.update_one(
-                    {'_id': st.session_state.club},
-                    {'$push' : {'채팅' : st.session_state.chat[-1]}}
-                    )
-                st.session_state.chat.clear()
-                st.experimental_rerun()
+        if t2 != '':
+            notice_list.update_one(
+                {'_id': st.session_state.club},
+                {'$push' : {'채팅' : st.session_state.chat[-1]}}
+                )
+            st.session_state.chat.clear()
+            
+#         if submitted :
+#             if t2 != '':
+#                 notice_list.update_one(
+#                     {'_id': st.session_state.club},
+#                     {'$push' : {'채팅' : st.session_state.chat[-1]}}
+#                     )
+#                 st.session_state.chat.clear()
+#                 st.experimental_rerun()
                 
 #         rerun = st.button('새로고침')
 

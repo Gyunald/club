@@ -325,7 +325,7 @@ if nickname :
                                 {'$push' : {'채팅' : st.session_state.chat[-1]}}
                                 )
                             st.session_state.chat.clear()
-                            st.experimental_rerun()
+#                             st.experimental_rerun()
                 
 #         rerun = st.button('새로고침')
 

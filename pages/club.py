@@ -326,19 +326,6 @@ if nickname :
                                 {'$push' : {'채팅' : st.session_state.chat[-1]}}
                                 )
                             st.experimental_rerun()
-
-                t2 = st.text_input('SayYes')
-
-                submitted = st.form_submit_button('공지등록',use_container_width=True,type='primary')
-                if submitted :
-                    if t2 != '':
-                        st.session_state.chat.append({nickname : t2})
-
-                        notice_list.update_one(
-                            {'_id': st.session_state.club},
-                            {'$push' : {'채팅' : st.session_state.chat[-1]}}
-                            )
-                    st.experimental_rerun()
                 
 #         rerun = st.button('새로고침')
 

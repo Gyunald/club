@@ -89,11 +89,11 @@
 #                 else:
 #                     st.warning('이미 같은장소에 모임이 있습니다.')
 
-        st.write('---')
-        rerun = st.button('새로고침')
+#         st.write('---')
+#         rerun = st.button('새로고침')
 
-        if rerun:
-            st.experimental_rerun()
+#         if rerun:
+#             st.experimental_rerun()
 
 #         c = st.columns(3)    
 #         doc = doc_ref.get().to_dict()
@@ -354,10 +354,10 @@ if nickname :
 
                 st.components.v1.html(js)
                 
-                # rerun = st.button('새로고침')
+                rerun = st.button('새로고침')
 
-                # if rerun:
-                #     st.experimental_rerun()
+                if rerun:
+                    st.experimental_rerun()
                 
  
                 

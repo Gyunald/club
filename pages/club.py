@@ -481,7 +481,7 @@ st.markdown("""
     }
 
     .stTextArea [data-baseweb=base-input] [disabled=""]{
-        -webkit-text-fill-color: rgb(40, 40, 40);
+        -webkit-text-fill-color: rgb(40, 60, 60);
     }
     </style>
     """,unsafe_allow_html=True)

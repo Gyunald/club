@@ -258,74 +258,74 @@ if nickname :
         else:
             emoji = '🎲'
             
-        st.subheader(f"club {emoji}")
-        with st.expander('club'):
-            c,c2 = st.columns([1,1])
-            with c:
-                with st.form("my_form",clear_on_submit=True):
-                    club = st.selectbox('club',[st.session_state.club])
-                    date = st.date_input('날짜',value=now_date,min_value=now_date,max_value=max_date).strftime('%Y.%m.%d')
-                    empty = st.empty()
-                    place = empty.selectbox('장소',st.session_state.place,help='장소를 직접 입력하려면 장소추가 버튼을 누르세요.')
-                    times = st.time_input('시간',value= time(17,30)).strftime('%H:%M')               
-                    people = st.number_input('정원',value=10,max_value=30,help='최대인원 30명')
-                    button_place = st.form_submit_button('장소추가',use_container_width=True)
-                    if button_place:
-                        place = empty.text_input('장소',placeholder='입력후 장소추가 클릭.',max_chars=30,help='장소추가 버튼을 한번 더 누르세요.')
-                        if place != '' and place not in st.session_state.place:
-                            st.session_state.place.append(place)
-                            place = empty.selectbox('장소',st.session_state.place,key='place_append')
-                            st.experimental_rerun()
+    st.subheader(f"club {emoji}")
+    with st.expander('club'):
+        c,c2 = st.columns([1,1])
+        with c:
+            with st.form("my_form",clear_on_submit=True):
+                club = st.selectbox('club',[st.session_state.club])
+                date = st.date_input('날짜',value=now_date,min_value=now_date,max_value=max_date).strftime('%Y.%m.%d')
+                empty = st.empty()
+                place = empty.selectbox('장소',st.session_state.place,help='장소를 직접 입력하려면 장소추가 버튼을 누르세요.')
+                times = st.time_input('시간',value= time(17,30)).strftime('%H:%M')               
+                people = st.number_input('정원',value=10,max_value=30,help='최대인원 30명')
+                button_place = st.form_submit_button('장소추가',use_container_width=True)
+                if button_place:
+                    place = empty.text_input('장소',placeholder='입력후 장소추가 클릭.',max_chars=30,help='장소추가 버튼을 한번 더 누르세요.')
+                    if place != '' and place not in st.session_state.place:
+                        st.session_state.place.append(place)
+                        place = empty.selectbox('장소',st.session_state.place,key='place_append')
+                        st.experimental_rerun()
 
-                    # button_place_del = st.form_submit_button('장소삭제',use_container_width=True)
-                    # if button_place_del:
-                    #     if place not in st.session_state.place:
-                    #         st.session_state.place.remove(place)
-                    #         st.experimental_rerun()
+                # button_place_del = st.form_submit_button('장소삭제',use_container_width=True)
+                # if button_place_del:
+                #     if place not in st.session_state.place:
+                #         st.session_state.place.remove(place)
+                #         st.experimental_rerun()
 
-                    data = { 
-                        '_id' : f"{date}_{place}",
-                        '시간' : times,
-                        '날짜' : date,
-                        '장소' : place,
-                        '참가목록' : [],
-                        '인원수' : 0,
-                        '정원' : people,
-                        '불참가목록' : [],
-                        '참여' : {},
-                        '불참' : {},            
-                        '작성자' : nickname,
-                    }
-                    
-                    submitted = st.form_submit_button('모임등록',use_container_width=True,type='primary')
-                    check = collection.find_one({'_id': f"{date}_{place}"})
+                data = { 
+                    '_id' : f"{date}_{place}",
+                    '시간' : times,
+                    '날짜' : date,
+                    '장소' : place,
+                    '참가목록' : [],
+                    '인원수' : 0,
+                    '정원' : people,
+                    '불참가목록' : [],
+                    '참여' : {},
+                    '불참' : {},            
+                    '작성자' : nickname,
+                }
 
-                    if submitted :
-                        if not check:
-                            db[st.session_state.club].insert_one(data)
-                            st.warning('모임이 생성되었습니다.')
-                            
-                        else:
-                            st.warning('이미 같은장소에 모임이 있습니다.')
-            with c2:
-                with st.form("Notice",clear_on_submit=True):
-                    a = notice_list.find_one({'_id' : st.session_state.club},{'_id':False})                
-                    a = [(f"{list(i.keys())[0]} : {list(i.values())[0]}") for i in a['채팅']]
-                    t = st.text_area('Notice', value= '\n'.join(a), height=358,disabled=True)
+                submitted = st.form_submit_button('모임등록',use_container_width=True,type='primary')
+                check = collection.find_one({'_id': f"{date}_{place}"})
 
-                    t2 = st.text_input('Shout out!')
+                if submitted :
+                    if not check:
+                        db[st.session_state.club].insert_one(data)
+                        st.warning('모임이 생성되었습니다.')
 
-                    submitted = st.form_submit_button('공지등록',use_container_width=True,type='primary')
-                    st.session_state.chat.append({nickname : f"{t2} \n🎈 {(datetime.utcnow()+timedelta(hours=9)).strftime('%Y.%m.%d')}"})
+                    else:
+                        st.warning('이미 같은장소에 모임이 있습니다.')
+        with c2:
+            with st.form("Notice",clear_on_submit=True):
+                a = notice_list.find_one({'_id' : st.session_state.club},{'_id':False})                
+                a = [(f"{list(i.keys())[0]} : {list(i.values())[0]}") for i in a['채팅']]
+                t = st.text_area('Notice', value= '\n'.join(a), height=358,disabled=True)
 
-                    if submitted :
-                        if t2 != '':
-                            notice_list.update_one(
-                                {'_id': st.session_state.club},
-                                {'$push' : {'채팅' : st.session_state.chat[-1]}}
-                                )
-                            st.session_state.chat.clear()
-                            st.experimental_rerun()
+                t2 = st.text_input('Shout out!')
+
+                submitted = st.form_submit_button('공지등록',use_container_width=True,type='primary')
+                st.session_state.chat.append({nickname : f"{t2} \n🎈 {(datetime.utcnow()+timedelta(hours=9)).strftime('%Y.%m.%d')}"})
+
+                if submitted :
+                    if t2 != '':
+                        notice_list.update_one(
+                            {'_id': st.session_state.club},
+                            {'$push' : {'채팅' : st.session_state.chat[-1]}}
+                            )
+                        st.session_state.chat.clear()
+                        st.experimental_rerun()
                 
 #         rerun = st.button('새로고침')
 
@@ -349,7 +349,7 @@ if nickname :
                 #         {'$set' : {'공지':[]}})
                 #     st.experimental_rerun()
                     
-        st.write('---')
+    st.write('---')
 
             
 #         c = st.columns(4)

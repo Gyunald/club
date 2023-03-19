@@ -309,12 +309,12 @@ if nickname :
                         else:
                             st.warning('이미 같은장소에 모임이 있습니다.')
             with c2:
-                with st.form("notice",clear_on_submit=True):
+                with st.form("Notice",clear_on_submit=True):
                     a = notice_list.find_one({'_id' : st.session_state.club},{'_id':False})                
                     a = [(f"{list(i.keys())[0]} : {list(i.values())[0]}") for i in a['채팅']]
-                    t = st.text_area('Chat', value= '\n'.join(a), height=358,disabled=True)
+                    t = st.text_area('Notice', value= '\n'.join(a), height=358,disabled=True)
 
-                    t2 = st.text_input('SayYes')
+                    t2 = st.text_input('Shout out!')
 
                     submitted = st.form_submit_button('공지등록',use_container_width=True,type='primary')
                     if submitted :
